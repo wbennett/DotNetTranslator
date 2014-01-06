@@ -31,7 +31,7 @@ namespace DotNetTranslator
             if (args.Length != 2 ||
                 !File.Exists(args[0]))
             {
-                Console.WriteLine("Usage: GarbageToGold.exe <path/to/vb file> <path/to/csharp file>");
+                Console.WriteLine("Usage: DotNetTranslator.exe <path/to/vb file> <path/to/csharp file>");
                 return;
             }
             
