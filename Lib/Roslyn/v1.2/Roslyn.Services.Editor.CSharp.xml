@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Roslyn.Services.Editor.CSharp</name>
+    </assembly>
+    <members>
+        <member name="T:Roslyn.Services.Editor.CSharp.AutomaticCompletion.AutomaticLineEnderCommandHandler">
+            <summary>
+            csharp automatic line ender command handler
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.AutomaticCompletion.AutomaticLineEnderCommandHandler.WrapInType(System.String)">
+            <summary>
+            wrap field in type
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.AutomaticCompletion.AutomaticLineEnderCommandHandler.CheckLocation(Roslyn.Compilers.IText,System.Int32,Roslyn.Compilers.CSharp.SyntaxNode,Roslyn.Compilers.CSharp.SyntaxToken)">
+            <summary>
+            make sure current location is okay to put semicolon
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.AutomaticCompletion.AutomaticLineEnderCommandHandler.TryGetLastToken(Roslyn.Compilers.IText,System.Int32,Roslyn.Compilers.CSharp.SyntaxNode,Roslyn.Compilers.CSharp.SyntaxToken@)">
+            <summary>
+            get last token of the given using/field/statement if one exists
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.AutomaticCompletion.AutomaticLineEnderCommandHandler.LocatedAtTheEndOfLine(Roslyn.Compilers.ITextLine,Roslyn.Compilers.CSharp.SyntaxToken)">
+            <summary>
+            check whether the line is located at the end of the line
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.AutomaticCompletion.AutomaticLineEnderCommandHandler.GetOwningNode(Roslyn.Compilers.Common.CommonSyntaxNode,System.Int32)">
+            <summary>
+            find owning usings/field/statement of the given position
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CSharp.AutomaticCompletion.Trackers.BraceTrackerProvider">
+            <summary>
+            brace tracker provider
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CSharp.AutomaticCompletion.Trackers.BraceTrackerProvider.BracesTracker">
+            <summary>
+            actual brace tracker
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.AutomaticCompletion.Trackers.BraceTrackerProvider.BracesTracker.OnTypeChar(System.Char,System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handle type character case
+            
+            if given character is the closing character, for brace case, make sure we format the range
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.AutomaticCompletion.Trackers.BraceTrackerProvider.BracesTracker.OnReturn(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handler for return key
+            
+            unlike other trackers, we want to format and put a caret at a specific place for braces
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CSharp.AutomaticCompletion.Trackers.BracketTrackerProvider">
+            <summary>
+            bracket tracker provider
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CSharp.AutomaticCompletion.Trackers.CharLiteralTrackerProvider">
+            <summary>
+            string literal tracker provider
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CSharp.AutomaticCompletion.Trackers.LessAndGreaterThanTrackerProvider">
+            <summary>
+            less than and greater than tracker provider
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CSharp.AutomaticCompletion.Trackers.ParenthesisTrackerProvider">
+            <summary>
+            parentheses tracker provider
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CSharp.AutomaticCompletion.Trackers.StringLiteralTrackerProvider">
+            <summary>
+            string literal tracker provider
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CSharp.AutomaticCompletion.Trackers.VerbatimStringLiteralTrackerProvider">
+            <summary>
+            string literal tracker provider
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.CSharp.ContentType.ContentTypeDefinitions.CSharpContentTypeDefinition">
+            <summary>
+            Definition of the primary C# content type.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CSharp.ContentType.FileExtensionMappings">
+            <summary>
+            Mappings of file extensions supported by the C# editor to C# content type.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.Debugging.BreakpointGetter.TryCreateBreakpointSpanForQueryClause(Roslyn.Compilers.CSharp.QueryClauseSyntax,Roslyn.Compilers.CSharp.SyntaxToken)">
+            <summary>
+            This code is used when the user's initial location is on a query keyword itself (as
+            opposed to inside an expression inside the query clause).  It places the bp on the
+            appropriate child expression in the clause.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CSharp.Debugging.CSharpProximityExpressionsService">
+            <summary>
+            Given a position in a source file, returns the expressions in close proximity that should
+            show up in the debugger 'autos' window.  In general, the expressions we place into the autos
+            window are things that appear to be 'side effect free'.  Note: because we only use the syntax
+            tree for this, it's possible for us to get this wrong.  However, this should only happen in
+            code that behaves unexpectedly.  For example, we will assume that "a + b" is side effect free
+            (when in practice it may not be).  
+            
+            The general tactic we take is to add the expressions for the statements on the
+            line the debugger is currently at.  We will also try to find the 'previous' statement as well
+            to add the expressions from that.  The 'previous' statement is a bit of an interesting beast.
+            Consider, for example, if the user has just jumped out of a switch and is the statement
+            directly following it.  What is the previous statement?  Without keeping state, there's no way
+            to know.  So, in this case, we treat all 'exit points' (i.e. the last statement of a switch
+            section) of the switch statement as the 'previous statement'.  There are many cases like this
+            we need to handle.  Basically anything that might have nested statements/blocks might
+            contribute to the 'previous statement'
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.NavigationBar.NavigationBarItemService.GetFieldSpan(Roslyn.Compilers.Common.ISymbol)">
+            <summary>
+            Computes a span for a given field symbol, expanding to the outer 
+            </summary>
+            <param name="symbol"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.NavigationBar.NavigationBarItemService.GetMatchingItem``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Finds the item that point is in, or if it's not in any items, gets the first item that's
+            positioned after the cursor.
+            </summary>
+            <returns>A tuple of the matching item, and if it should be shown grayed.</returns>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.KeywordHighlighting.KeywordHighlighters.LoopHighlighter.HighlightRelatedKeywords(Roslyn.Compilers.CSharp.SyntaxNode,System.Collections.Generic.List{Roslyn.Compilers.TextSpan},System.Boolean,System.Boolean)">
+            <summary>
+            Finds all breaks and continues that are a child of this node, and adds the appropriate spans to the spans list.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.KeywordHighlighting.KeywordHighlighters.ReturnStatementHighlighter.HighlightRelatedKeywords(Roslyn.Compilers.CSharp.SyntaxNode,System.Collections.Generic.List{Roslyn.Compilers.TextSpan})">
+            <summary>
+            Finds all returns that are chldren of this node, and adds the appropriate spans to the spans list.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.KeywordHighlighting.KeywordHighlighters.SwitchStatementHighlighter.HighlightRelatedKeywords(Roslyn.Compilers.CSharp.SyntaxNode,System.Collections.Generic.List{Roslyn.Compilers.TextSpan})">
+            <summary>
+            Finds all breaks and continues that are a child of this node, and adds the appropriate spans to the spans
+            list.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.KeywordHighlighting.KeywordHighlighters.YieldStatementHighlighter.HighlightRelatedKeywords(Roslyn.Compilers.CSharp.SyntaxNode,System.Collections.Generic.List{Roslyn.Compilers.TextSpan})">
+            <summary>
+            Finds all returns that are chldren of this node, and adds the appropriate spans to the spans list.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.LineSeparator.CSharpLineSeparatorService.GetLineSeparators(Roslyn.Services.IDocument,Roslyn.Compilers.TextSpan,System.Threading.CancellationToken)">
+            <summary>
+            Given a tree returns line separator spans.
+            The operation may take fairly long time on a big tree so it is cancelable.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.LineSeparator.CSharpLineSeparatorService.IsSeparableBlock(Roslyn.Compilers.CSharp.SyntaxNode)">
+            <summary>Node types that are interesting for line separation.</summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.LineSeparator.CSharpLineSeparatorService.IsSeparableContainer(Roslyn.Compilers.Common.CommonSyntaxNode)">
+            <summary>Node types that may contain separable blocks.</summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CSharp.LineSeparator.CSharpLineSeparatorService.ProcessNodeList``1(Roslyn.Compilers.CSharp.SyntaxList{``0},System.Collections.Generic.List{Roslyn.Compilers.TextSpan},System.Threading.CancellationToken)">
+            <summary>
+            If node is separable and not the last in its container => add line separator after the node
+            If node is separable and not the first in its container => ensure separator before the node
+            last separable node in Program needs separator after it.
+            </summary>
+        </member>
+    </members>
+</doc>

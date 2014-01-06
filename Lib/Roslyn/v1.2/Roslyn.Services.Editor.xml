@@ -1,0 +1,2951 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Roslyn.Services.Editor</name>
+    </assembly>
+    <members>
+        <member name="M:Roslyn.Services.Editor.Shared.Tagging.ITaggerEventSource.Connect">
+            <summary>
+            Let event source know that it should start sending out events.  Implementation can use
+            that as a point to attach to events and perform other initialization. This will only be
+            called once. 
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Tagging.ITaggerEventSource.Disconnect">
+            <summary>
+            Let event source know that it is no longer needed.  Implementations can use this as a
+            point to detach from events and perform other cleanup.  This will only be called once.
+            </summary>
+        </member>
+        <member name="E:Roslyn.Services.Editor.Shared.Tagging.ITaggerEventSource.Changed">
+            <summary>
+            An event has happened on the thing the tagger is attached to.  The tagger should
+            recompute tags.
+            </summary>
+        </member>
+        <member name="E:Roslyn.Services.Editor.Shared.Tagging.ITaggerEventSource.UIUpdatesPaused">
+            <summary>
+            The tagger should stop updating the UI with the tags it's produced.
+            </summary>
+        </member>
+        <member name="E:Roslyn.Services.Editor.Shared.Tagging.ITaggerEventSource.UIUpdatesResumed">
+            <summary>
+            The tagger can start notifying the UI about its tags again.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.CodeHierarchy.CodeHierarchyDashboard">
+            <summary>
+            Interaction logic for CodeHierarchyDashboard.xaml
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CodeHierarchy.CodeHierarchyDashboard.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.LightBulbs.LightBulb.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.NavigationBar.NavigationBarSymbolIdIndexProvider">
+            <summary>
+            A little helper to produce indexes when producing NavigationBarItems when we have multiple
+            symbols with the same symbol ID.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CommandArgs">
+            <summary>
+            The base class of all command argument types used by ICommandHandler.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.CommandArgs.SubjectBuffer">
+            <summary>
+            The text buffer of where the caret is when the command happens.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.CommandArgs.TextView">
+            <summary>
+            The text view that originated this command.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.MetadataAsSource.GeneratedDocument.Workspace">
+            <summary>
+            The containing TrackingMetadataAsSourceWorkspace
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.MetadataAsSource.GeneratedDocument.Key">
+            <summary>
+            The unique identifier for this document. All documents created with the same project and
+            a symbol that comes from the same top-level (parented by a namespace) named type symbol
+            will result in the same key.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.MetadataAsSource.GeneratedDocument.AssemblyPath">
+            <summary>
+            The path of the assembly that the symbol for which source was requested came from
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.MetadataAsSource.GeneratedDocument.TextBuffer">
+            <summary>
+            ITextBuffer containing generated source code
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.MetadataAsSource.GeneratedDocument.Id">
+            <summary>
+            The id of the document containing generated source code
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.MetadataAsSource.GeneratedDocument.CurrentDocument">
+            <summary>
+            Snapshot of the document containing generated source code
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.RenameTracking.RenameTrackingTaggerProvider">
+            <summary>
+            Also known as "rename smart tag," this watches text changes in open buffers, determines
+            whether they can be interpreted as an identifer rename, and if so displays a smart tag 
+            that can perform a rename on that symbol. Each text buffer is tracked independently.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.RenameTracking.RenameTrackingTaggerProvider.StateMachine">
+            <summary>
+            Keeps track of the rename tracking state for a given text buffer by tracking its
+            changes over time.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.RenameTracking.RenameTrackingTaggerProvider.TrackingSession">
+            <summary>
+            Determines whether the original token was a renamable identifier on a background thread
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.RenameTracking.RenameTrackingTaggerProvider.UndoPrimitive">
+            <summary>
+            Clears the state machine on relevant undo/redo actions.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ITrackingMetadataAsSourceService.GetSource(Roslyn.Services.IProject,Roslyn.Compilers.Common.ISymbol,System.Threading.CancellationToken)">
+            <summary>
+            Generates a document containing general information about the symbol's containing
+            assembly, and the formatted source code for the public, protected, and
+            protected-or-internal interface of which the given ISymbol is or is a part of.  The
+            result can be tracked and reused by this service.
+            </summary>
+            <param name="project">The project from which the symbol to generate source for came
+            from.  When generating source for a symbol that came from source generated by this
+            service, the original project that generated source for the first symbol must be
+            used.</param>
+            <param name="symbol">The symbol whose interface to generate source for</param>
+            <param name="cancellationToken">To cancel project and document operations</param>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Completion.PathCompletionUtilities.AfterLastSlashIndex(System.String,System.Int32)">
+            <summary>
+            Returns the index right after the last slash that precedes 'position'.  If there is no
+            slash in the string, -1 is returned.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IOptionsProvider">
+            <summary>
+            a provider for features default options
+            must be decorated with ExportOptionsProviderAttribute
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IOptionsProvider.GetAllOptionDescriptions">
+            <summary>
+            returns information about options defined in this provider
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IOptionsProvider.GetOptionDefaultValue``1(Roslyn.Services.Editor.OptionKey{``0})">
+             <summary>
+             get option's default value
+            
+             it should return same value regardless when and how many times it is called
+             </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.MetadataAsSourceResult">
+            <summary>
+            The result of a call to ITrackingMetadataAsSourceService.GetSource().  Two results are
+            "equal" if they were generated using the same project and contain source for the same
+            top-level (parented by a namespace) named type.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.MetadataAsSourceResult.GeneratedDocument">
+            <summary>
+            The underlying GeneratedDocument tracked by the ITrackingMetadataAsSourceService
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.MetadataAsSourceResult.GeneratingProjectId">
+            <summary>
+            The id of the project that the symbol used to generate source came from, or if
+            generating source from a document that was generated by
+            ITrackingMetadataAsSourceService, the id of the original project that was used to
+            generate that source
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.MetadataAsSourceResult.Location">
+            <summary>
+            The source location of the definition of the symbol for which source was requested
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.MetadataAsSourceResult.CurrentGeneratingProject">
+            <summary>
+            Snapshot of the project that the symbol used to generate source came from, or if
+            generating source from a document that was generated by
+            ITrackingMetadataAsSourceService, snapshot of the original project that was used to
+            generate that source
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.MetadataAsSourceResult.DocumentId">
+            <summary>
+            The id of the document containing generated source code.  Note that the associated
+            document is part of an internal workspace.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.MetadataAsSourceResult.CurrentDocument">
+            <summary>
+            Snapshot of the document containing generated source code
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.MetadataAsSourceResult.AssemblyPath">
+            <summary>
+            The path of the assembly that the symbol for which source was requested came from
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.MetadataAsSourceResult.TextBuffer">
+            <summary>
+            ITextBuffer containing generated source code
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.WorkQueue">
+            <summary>
+            The async worker we defer to handle foreground/background thread management for this
+            tagger. Note: some operations we perform on this must be uncancellable.  Specifically,
+            once we've updated our internal state we need to *ensure* that the UI eventually gets in
+            sync with it. As such, we allow cancellation of our tasks *until* we update our state.
+            From that point on, we must proceed and execute the tasks.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.cachedTagsGate">
+            <summary>
+            Synchronization object for assignments to the cachedTags field. This is only used for
+            changes; reads may be done without any locking since the data structure itself is
+            immutable.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.removeTagsThatIntersectEdits">
+            <summary>
+            True if edits should cause us to remove tags that intersect with edits.  Used to ensure
+            that squiggles are removed when the user types over them.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.actionName">
+            <summary>
+            string that we need to pass as the action name to the worker queue.
+            It is computed, so we want to cache it.
+            = this.GetType() + ".OnChanged"
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.bufferToRelatedTagSource">
+            <summary>
+            A function that is provided to the producer of this tag source. May be null. In some
+            scenarios, such as restoring previous REPL history entries, we want to try to use the
+            cached tags we've already computed for the buffer, but those live in a different tag
+            source which we need some help to find.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.eventSource">
+            <summary>
+            Our tagger event source that lets us know when we should call into the tag producer for
+            new tags.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.previousCachedTags">
+            <summary>
+            During the time that we are paused from updating the UI, we will use these tags instead.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.getSpansToTag">
+            <summary>
+            Implemented by derived types to return a list of snapshot spans to tag.
+            </summary>
+            <remarks>Called on the foreground thread.</remarks>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.getCaretPoint">
+            <summary>
+            Implemented by derived types to return The caret position.
+            </summary>
+            <remarks>Called on the foreground thread.</remarks>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.RecomputeTags">
+            <summary>
+            Called on the foreground thread.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.ProduceTagsAsync(System.Collections.Generic.IEnumerable{Microsoft.VisualStudio.Text.SnapshotSpan},System.Nullable{Microsoft.VisualStudio.Text.SnapshotPoint},System.Threading.CancellationToken)">
+            <summary>
+            Implemented by derived types to do the actually call the producer.
+            </summary>
+            <remarks>Called on the background thread.</remarks>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.RecomputeTagsAsync(System.Nullable{Microsoft.VisualStudio.Text.SnapshotPoint},System.Collections.Generic.IEnumerable{Microsoft.VisualStudio.Text.SnapshotSpan},System.Threading.CancellationToken)">
+            <summary>
+            Called on the background thread (or foreground if SynchronousTagInitializationEnabled is true).
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.Difference(Microsoft.VisualStudio.Text.ITextSnapshot,Roslyn.Services.Editor.Shared.Tagging.TagSpanIntervalTree{`0},Roslyn.Services.Editor.Shared.Tagging.TagSpanIntervalTree{`0},System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>
+            Return all the spans that appear in only one of "latestSpans" or "previousSpans".
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.GetTagIntervalTreeForBuffer(Microsoft.VisualStudio.Text.ITextBuffer)">
+            <summary>
+            Returns the TagSpanIntervalTree containing the tags for the given buffer. If no tags
+            exist for the buffer at all, null is returned.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.allocationCallstack">
+            <summary>There is someone who is leaking the tag source, and letting it be finalized.
+            Keep track of who allocates us so we can see it in the finalizer.</summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TagSource`1.taggers">
+            <summary>How many taggers are currently using us.</summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.WordDeleteToStartCommandArgs">
+            <summary>
+            Arguments for the Ctrl+Backspace
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.AbstractAutomaticLineEnderCommandHandler">
+            <summary>
+            abstract line ender command handler
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.ICommandHandler`1">
+            <summary>
+            Implement to handle a command before it is processed by the editor. To export this, export
+            the non-generic ICommandHandler.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.ICommandHandler">
+            <summary>
+            This interface is implemented by a class that implements at least one strongly-typed
+            ICommandHandler&lt;T&gt;. When implementing a strongly-typed ICommandHandler, you should MEF
+            export this base interface.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ICommandHandler`1.GetCommandState(`0,System.Func{Roslyn.Services.Editor.CommandState})">
+            <summary>
+            Called to determine the state of the command.
+            </summary>
+            <param name="args">The arguments of the command, which contains data about the event
+            that fired.</param>
+            <param name="nextHandler">A delegate which calls the next command handler in the chain.
+            Every command handler must invoke this delegate if they do not wish to fully handle the
+            command themselves.</param>
+            <returns>Return a CommandState instance.</returns>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ICommandHandler`1.ExecuteCommand(`0,System.Action)">
+            <summary>
+            Called when the command is executed.
+            </summary>
+            <param name="args">The arguments of the command, which contains data about the event
+            that fired.</param>
+            <param name="nextHandler">A delegate which calls the next handler in the chain. Every
+            command handler must invoke this delegate if they do not wish to fully handle the
+            command themselves.</param>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.AbstractAutomaticLineEnderCommandHandler.GetEndingString(Roslyn.Services.IDocument,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            get ending string if there is one
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.AbstractAutomaticLineEnderCommandHandler.NextAction(Microsoft.VisualStudio.Text.Operations.IEditorOperations,System.Action)">
+            <summary>
+            do next action
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.AbstractAutomaticLineEnderCommandHandler.FormatAndApply(Roslyn.Services.IDocument,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            format after inserting ending string
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.AbstractAutomaticLineEnderCommandHandler.StopAfterDismissingCompletionSet(System.Boolean)">
+            <summary>
+            stop processing after dismissing completion set
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.AbstractAutomaticLineEnderCommandHandler.GetInsertionPoint(Roslyn.Services.IDocument,Microsoft.VisualStudio.Text.ITextSnapshotLine,System.Threading.CancellationToken)">
+            <summary>
+            return insertion point for the ending string
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.AbstractAutomaticLineEnderCommandHandler.TryDismissAllAndCommitActiveOne(Roslyn.Services.Editor.IBufferView,System.Boolean@)">
+            <summary>
+            dimiss active completion set if there is one. and commit the selected one if there is one
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.AbstractAutomaticLineEnderCommandHandler.InsertEndingIfRequired(Roslyn.Services.IDocument,System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            insert ending string if there is one to insert
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.AutomaticLineEnderCommandArgs">
+            <summary>
+            Arguments for automatic line ender command
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.Format(Microsoft.VisualStudio.Text.ITextBuffer,Microsoft.VisualStudio.Text.ITrackingSpan,Microsoft.VisualStudio.Text.ITrackingSpan,System.Threading.CancellationToken)">
+            <summary>
+            format span between opening and closing points
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.Format(Microsoft.VisualStudio.Text.ITextBuffer,Roslyn.Compilers.TextSpan,System.Threading.CancellationToken)">
+            <summary>
+            format span
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.CreateEditTransaction(Microsoft.VisualStudio.Text.Editor.ITextView,System.String,Microsoft.VisualStudio.Text.Operations.ITextUndoHistoryRegistry,Microsoft.VisualStudio.Text.Operations.IEditorOperationsFactoryService)">
+            <summary>
+            create caret preserving edit transaction with automatic code change undo merging policy
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.CreateEditTransaction(Roslyn.Services.Editor.IBufferView,System.String,Microsoft.VisualStudio.Text.Operations.ITextUndoHistoryRegistry,Microsoft.VisualStudio.Text.Operations.IEditorOperationsFactoryService)">
+            <summary>
+            create caret preserving edit transaction with automatic code change undo merging policy
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.GetDocument(Microsoft.VisualStudio.Text.ITextSnapshot)">
+            <summary>
+            get IDocument corresponding to the snapshot
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.GetDocument(Microsoft.VisualStudio.Text.ITextBuffer)">
+            <summary>
+            get IDocument of the buffer's current snapshot
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.FindTokenFromEnd(Microsoft.VisualStudio.Text.ITextBuffer,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            find token from the end based on the current snapshot of the given buffer
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.FindTokenFromEnd(Microsoft.VisualStudio.Text.ITextSnapshot,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            find token from the end based on the snapshot
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.InsertText(Roslyn.Services.IDocument,System.Int32,System.String,System.Threading.CancellationToken)">
+            <summary>
+            insert text to workspace and get updated version of the document
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.DeleteText(Roslyn.Services.IDocument,Roslyn.Compilers.TextSpan,System.Threading.CancellationToken)">
+            <summary>
+            delete text to workspace and get updated version of the document
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.ReplaceText(Roslyn.Services.IDocument,Roslyn.Compilers.TextSpan,System.String,System.Threading.CancellationToken)">
+            <summary>
+            replace text to workspace and get updated version of the document
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.ApplyTextChange(Roslyn.Services.IDocument,Roslyn.Compilers.TextChange,System.Threading.CancellationToken)">
+            <summary>
+            apply text chagnes to workspace and get updated version of the document
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.ApplyTextChanges(Roslyn.Services.IDocument,System.Collections.Generic.IEnumerable{Roslyn.Compilers.TextChange},System.Threading.CancellationToken)">
+            <summary>
+            apply text chagnes to workspace and get updated version of the document
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Extensions.ApplyTextChanges(Roslyn.Services.IWorkspace,Roslyn.Services.DocumentId,System.Collections.Generic.IEnumerable{Roslyn.Compilers.TextChange},System.Threading.CancellationToken)">
+            <summary>
+            apply text changes to the workspace and get updated version from the workspace
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractLiteralTrackerProvider">
+            <summary>
+            base implementation for literal tracker provider
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractOneTokenTrackerProvider">
+            <summary>
+            base implementation for one token tracker provider
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractTextPairTrackerProvider">
+            <summary>
+            a pair tracker provider that works based on text rather than anything syntactic 
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.AutomaticCompletion.IAutomaticCompletionTrackerProvider">
+            <summary>
+            implements this to extend the automatic pair completion feature
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.AutomaticCompletion.IAutomaticCompletionTrackerProvider.IsTriggeringCharacter(Microsoft.VisualStudio.Text.SnapshotPoint,System.Char,System.Threading.CancellationToken)">
+            <summary>
+            determine textually whether typed char at the specific position is valid triggering character
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.AutomaticCompletion.IAutomaticCompletionTrackerProvider.GetOpeningPoint(Roslyn.Services.Editor.IBufferView,Microsoft.VisualStudio.Text.ITextBuffer,System.Char,System.Action,System.Threading.CancellationToken)">
+            <summary>
+            return tracker if it is semantically valid position to start tracking
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTrackerProvider.GetOpeningPoint(Roslyn.Services.Editor.IBufferView,Microsoft.VisualStudio.Text.ITextBuffer,System.Threading.CancellationToken)">
+            <summary>
+            return opening point tracking span if it exists, otherwise null
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTrackerProvider.InsertCorrespondingClosingPoint(Roslyn.Services.Editor.IBufferView,Microsoft.VisualStudio.Text.ITextBuffer,Microsoft.VisualStudio.Text.ITrackingSpan,System.Threading.CancellationToken)">
+            <summary>
+            insert corresponding closing point and return tracking span for the newly inserted closing point. 
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTrackerProvider.CreateTracker(Roslyn.Services.Editor.IBufferView,Microsoft.VisualStudio.Text.ITextBuffer,Microsoft.VisualStudio.Text.ITrackingSpan,Microsoft.VisualStudio.Text.ITrackingSpan)">
+            <summary>
+            create a tracker with opening and closing points
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTrackerProvider.IsTriggeringCharacter(Microsoft.VisualStudio.Text.SnapshotPoint,System.Char,System.Threading.CancellationToken)">
+            <summary>
+            basic implementation of determining whether given character at the given position is the triggering character or not
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTrackerProvider.GetOpeningPoint(Roslyn.Services.Editor.IBufferView,Microsoft.VisualStudio.Text.ITextBuffer,System.Char,System.Action,System.Threading.CancellationToken)">
+            <summary>
+            basic implementation of getting IPairTracker at the specific position
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTrackerProvider.CreateEditTransaction(Roslyn.Services.Editor.IBufferView)">
+            <summary>
+            create edit traction with automatic code change merge policy
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTrackerProvider.InsertClosingString(Microsoft.VisualStudio.Text.ITextBuffer,Microsoft.VisualStudio.Text.SnapshotPoint,System.String,System.Threading.CancellationToken)">
+            <summary>
+            insert closing token to given position
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTrackerProvider.TryInit(Microsoft.VisualStudio.Text.ITextSnapshot)">
+            <summary>
+            lazily initialize SyntaxFactsService
+            
+            this is needed since there is no longer a way to get ISyntaxFactsService without going through document
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTrackerProvider.GetDocument(Microsoft.VisualStudio.Text.ITextSnapshot)">
+            <summary>
+            get document associated with snapshot
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTrackerProvider.SyntaxFactsService">
+            <summary>
+            lazily initialized by TryInit
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTrackerProvider.TriggeringCharacter">
+            <summary>
+            return triggering character
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractOneTokenTrackerProvider.GetOpeningPoint(Roslyn.Services.Editor.IBufferView,Microsoft.VisualStudio.Text.ITextBuffer,System.Threading.CancellationToken)">
+            <summary>
+            get opening point
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractOneTokenTrackerProvider.TokenKind">
+            <summary>
+            token kind this tracker will track
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractLiteralTrackerProvider.CreateTracker(Roslyn.Services.Editor.IBufferView,Microsoft.VisualStudio.Text.ITextBuffer,Microsoft.VisualStudio.Text.ITrackingSpan,Microsoft.VisualStudio.Text.ITrackingSpan)">
+            <summary>
+            create one token tracker
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.AutomaticCompletion.IPairTracker">
+            <summary>
+            represent an active pair in stack
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.AutomaticCompletion.IPairTracker.Contains(Microsoft.VisualStudio.Text.SnapshotPoint)">
+            <summary>
+            check whether the given position is between start and end position of the pair
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.AutomaticCompletion.IPairTracker.Owns(Microsoft.VisualStudio.Text.SnapshotPoint)">
+            <summary>
+            check whether the given position is contained by the start and end pair itself
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.AutomaticCompletion.IPairTracker.OnTypeChar(System.Char,System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handler for normal character typing
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.AutomaticCompletion.IPairTracker.OnTab(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handler for tab key
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.AutomaticCompletion.IPairTracker.OnBackspace(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handler for backspace key
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.AutomaticCompletion.IPairTracker.OnWordDeleteToStart(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handler for word delete to start key
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.AutomaticCompletion.IPairTracker.OnReturn(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handler for return key
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.AutomaticCompletion.IPairTracker.HighlightSpan">
+            <summary>
+            return hightlight span for the tracker
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.Contains(Microsoft.VisualStudio.Text.SnapshotPoint)">
+            <summary>
+            return true if given position is inside of the region this tracker is tracking
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.Owns(Microsoft.VisualStudio.Text.SnapshotPoint)">
+            <summary>
+            return true only if the given position is at the one of tracking points
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.OnTypeChar(System.Char,System.Action,System.Threading.CancellationToken)">
+            <summary>
+            regular typed character handler
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.OnBackspace(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            backspace handler
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.OnWordDeleteToStart(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            word delete to start handler
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.OnTab(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            tab handler
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.OnReturn(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            return handler
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.CheckBackspace(System.Threading.CancellationToken)">
+            <summary>
+            check whether we need to intercept the backspace or not
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.CheckWordDeleteToStart(System.Threading.CancellationToken)">
+            <summary>
+            check whether we need to intercept the word delete to start or not
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.CheckTab(System.Threading.CancellationToken)">
+            <summary>
+            check whether tab is issued in a valid context
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.DeleteAutoInsertedEndPoint(System.Threading.CancellationToken)">
+            <summary>
+            delete the pair
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.CaretIsOnClosingPointAndClosingPointIsFirstTokenOnLine(Microsoft.VisualStudio.Text.SnapshotPoint)">
+            <summary>
+            check whether the caret position is on the closing span's start position and whether
+            the closing point itself is the first thing on the line
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.CheckTypedCharacter(System.Char,System.Threading.CancellationToken)">
+            <summary>
+            check whether the typed character is valid one or not
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.PutCaretOnLine(System.Int32)">
+            <summary>
+            put caret at the right indentation of the line
+            </summary>
+            <param name="lineNumber"></param>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.GetDesiredIndentation(Microsoft.VisualStudio.Text.ITextSnapshotLine)">
+            <summary>
+            get desired indentation
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.InsertEmptyLineAfterOpeningPoint(System.Threading.CancellationToken)">
+            <summary>
+            insert empty line after opening point
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.FormatTrackingSpan(System.Threading.CancellationToken)">
+            <summary>
+            format opening and closing points
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.SkipClosingPoint">
+            <summary>
+            move to the end of the closing token
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.RemoveWhitespacesFromCaretPositionToBeginingOfClosingPoint(System.Threading.CancellationToken)">
+            <summary>
+            remove whitespaces between current caret position to closing point
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.RemoveEmptyLinesFromCaretPositionToBeginingOfClosingPoint(System.Threading.CancellationToken)">
+            <summary>
+            remove empty lines between caret position and start position of the closing point
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.CreateEditTransaction">
+            <summary>
+            create edit traction with automatic code change merge policy
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.ContainsAllWhitespace(Microsoft.VisualStudio.Text.ITextSnapshot,System.Int32,System.Int32)">
+            <summary>
+            check whether the snapshot contains only whitespace between start and end position
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.OpeningPoint">
+            <summary>
+            opening point
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.ClosingPoint">
+            <summary>
+            closing point
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.ClosingCharacter">
+            <summary>
+            a character that closes this tracker
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.HighlightSpan">
+            <summary>
+            span to highlight
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.OpeningSpan">
+            <summary>
+            return current span of the opening point
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.ClosingSpan">
+            <summary>
+            return current span of the closing point
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.CurrentDocument">
+            <summary>
+            return current document
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractPairTracker.CurrentCaretPosition">
+            <summary>
+            return current caret position if one exists
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.TrackerStack">
+            <summary>
+            active pair tracker stack
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.TrackerStack.Owns(Microsoft.VisualStudio.Text.SnapshotPoint)">
+            <summary>
+            check whether one of trackers owns the position
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.TrackerStack.AddActiveTracker(Roslyn.Services.Editor.AutomaticCompletion.IPairTracker)">
+            <summary>
+            add new active tracker
+            </summary>
+            <param name="tracker"></param>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.TrackerStack.RemoveOutOfRangeTrackers(Microsoft.VisualStudio.Text.SnapshotPoint)">
+            <summary>
+            remove trackers from stack if current position is out of range of the tracker
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.TrackerStack.Clear">
+            <summary>
+            clear all trackers we are tracking
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.TrackerStack.Current">
+            <summary>
+            get current active tracker
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Taggers.AutomaticCompletionViewTaggerProvider">
+            <summary>
+            simple text marker tagger provider that will highlight end point of active tracker
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView">
+            <summary>
+            per view automatic pair completion manager
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.stack">
+            <summary>
+            stack for active trackers. innermost one is the one at the top.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.OnTypeChar(System.Char,System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handler for regular typing
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.OnTab(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handler for tab
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.OnBackspace(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handler for backspace
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.OnWordDeleteToStart(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handler for word delete to start key
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.OnReturn(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            handler for return
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.GetTrackerProvider(Microsoft.VisualStudio.Text.SnapshotPoint,System.Char,System.Action,System.Threading.CancellationToken)">
+            <summary>
+            get a tracker from providers
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.GetAutomaticCompletionTrackerService">
+            <summary>
+            return automatic completion tracker service through document
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.CheckForwardTypingOnEmptyLine(Microsoft.VisualStudio.Text.SnapshotPoint)">
+            <summary>
+            check whether users are forward typing on a empty line or a line only with closing part of automatic pair completion
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.OnViewClosed(System.Object,System.EventArgs)">
+            <summary>
+            disconnect all evetns at view close
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.OnPositionChanged(System.Object,Microsoft.VisualStudio.Text.Editor.CaretPositionChangedEventArgs)">
+            <summary>
+            update active tracker after caret position chagnes
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.OnPostChanged(System.Object,System.EventArgs)">
+            <summary>
+            update active tracker after text buffer changes
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.GetOrCreateManager(Microsoft.VisualStudio.Text.Editor.ITextView,Microsoft.VisualStudio.Text.ITextBuffer)">
+            <summary>
+            get or create a manager
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.ManagerPerView.CreateManager(Microsoft.VisualStudio.Text.Editor.ITextView,Microsoft.VisualStudio.Text.ITextBuffer)">
+            <summary>
+            create a manager
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CommandHandlers.IntelliSenseCommandHandler">
+            <summary>
+            There are two forms of intellisense that may be active at the same time.  Completion and
+            SigHelp.  SigHelp procedes Completion in our command handler because it wants to make sure
+            it's operating on a buffer *after* Completion has changed it.  i.e. if "WriteL(" is typed,
+            sig help wants to allow completion to complete that to "WriteLine(" before it tried to
+            proffer sig help.  If we were to reverse things, then we'd get a bogus situation where sig
+            help would see "WriteL(" would have nothing to offer and would return.
+            
+            However, despite wanting sighelp to receive typechar first and then defer it to completion,
+            we want completion to receive other events first (like escape, and navigation keys).  We
+            consider completion to have higher priority for those commands.  In order to accomplish that,
+            both of the sig help and completion command handlers are imported by this command handler.
+            This command handler then delegates escape, up and down to those command handlers.  It always
+            tries the completion command handler first, and defers to signature help if completion
+            doesn't process the command.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CommandHandlers.AutomaticCompletionCommandHandler">
+            <summary>
+            automatic pair completion command handler
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CommandHandlers.AutomaticCompletionCommandHandler.IsCompletionActive(Roslyn.Services.Editor.IBufferView)">
+            <summary>
+            return true if completion set is active on the view
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CommandHandlers.AutomaticCompletionCommandHandler.CheckContext(Roslyn.Services.Editor.IBufferView,Microsoft.VisualStudio.Text.ITextBuffer,System.Boolean)">
+            <summary>
+            check whether input is in valid context or not
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CommandHandlers.AutomaticCompletionCommandHandler.ContainsSelection(Roslyn.Services.Editor.IBufferView,Microsoft.VisualStudio.Text.ITextBuffer)">
+            <summary>
+            check whether the subject buffer contains a selection
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.CommandHandlers.AutomaticCompletionCommandHandler.GetManager(Microsoft.VisualStudio.Text.Editor.ITextView,Microsoft.VisualStudio.Text.ITextBuffer)">
+            <summary>
+            get manger for subject buffer of the current view
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.AutomaticCompletion.ExportAutomaticCompletionTrackerProviderAttribute">
+            <summary>
+            MEF Export attribute to annotate exported IPairProvider
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.ICodeCleanupService">
+            <summary>
+            a service that provides information about currently registered code cleaners.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.ICodeCleanupService.CurrentProviders">
+            <summary>
+            returns editor's current code cleaners that the engine will use to clean up the code
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IDiagnosticBlock">
+            <summary>
+            Represents a block of diagnostics that update together.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.IDiagnosticBlock.Id">
+            <summary>
+            The identity of diagnostic block. 
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.IDiagnosticBlock.Diagnostics">
+            <summary>
+            The diagnostics associated with the ID.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.ISyntaxOrganizerService">
+            <summary>
+            a service that provides information about currently registered syntax organizers
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.ISyntaxOrganizerService.CurrentOrganizers">
+            <summary>
+            returns editor's current syntax organizers that the engine will use to organize the code
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.AbstractAutomaticCompletionPairService">
+            <summary>
+            hold onto language specific automatic completion pair providers
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.IAutomaticCompletionTrackerService">
+            <summary>
+            provides MEF imported IAutomaticCompletionPairProviders
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.IAutomaticCompletionTrackerService.CurrentProviders">
+            <summary>
+            return all AutomaticCompletionPairProvider MEF imported
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.TextPairTracker">
+            <summary>
+            text based pair tracker
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractTokenPairTrackerProvider.CreateTracker(Roslyn.Services.Editor.IBufferView,Microsoft.VisualStudio.Text.ITextBuffer,Microsoft.VisualStudio.Text.ITrackingSpan,Microsoft.VisualStudio.Text.ITrackingSpan)">
+            <summary>
+            return common token based tracker that doesn't have any special behavior
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractTokenPairTrackerProvider.TokenKind">
+            <summary>
+            return the token kind the base one token tracker use to check input position
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractTokenPairTrackerProvider.TriggeringCharacter">
+            <summary>
+            get triggering character from opening token kind
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractTokenPairTrackerProvider.OpeningString">
+            <summary>
+            opening string of the tracker
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.AbstractTokenPairTrackerProvider.ClosingCharacter">
+            <summary>
+            closing char for the tracker
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Trackers.NullPairTracker">
+            <summary>
+            null object that implements IActivePairTracker
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Taggers.TagProducer">
+            <summary>
+            produce tag for the given snapshot span
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Tagging.ITagProducer`1.ProduceTagsAsync(System.Collections.Generic.IEnumerable{Microsoft.VisualStudio.Text.SnapshotSpan},System.Nullable{Microsoft.VisualStudio.Text.SnapshotPoint},System.Threading.CancellationToken)">
+            <summary>
+            Produce tags for the given spans.
+            </summary>
+            <param name="snapshotSpans">A list of SnapshotSpans that tags should be computed for. In
+            some scenarios, snapshotSpans may contain spans for snapshots that correspond to
+            different buffers entirely. It is guaranteed, however, that there were not be multiple
+            spans from different snapshots from the same buffer.</param>
+            <param name="caretPosition">The caret position, if a caret position exists in one of the
+            buffers included in snapshotSpans.</param>
+            <param name="cancellationToken"></param>
+            <returns>A list of tag spans</returns>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Taggers.TagProducer.buffer">
+            <summary>
+            subject buffer in the textview to which this tag producer is attached to
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Taggers.TagProducer.trackingSpan">
+            <summary>
+            it is a mutable state. there will be only one per view/subject buffer pair
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Taggers.TagProducer.eventSource">
+            <summary>
+            event source for this producer
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Taggers.TagProducer.GetCurrentSpan(Microsoft.VisualStudio.Text.ITextSnapshot)">
+            <summary>
+            get current snapshot span from the tracking span
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Taggers.TagProducer.AddHighlightSpan(Microsoft.VisualStudio.Text.ITrackingSpan)">
+            <summary>
+            add new highlight span to this producer
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Taggers.TagProducer.GetTagProducer(Microsoft.VisualStudio.Text.Editor.ITextView,Microsoft.VisualStudio.Text.ITextBuffer)">
+            <summary>
+            get tag producer for the specific view and buffer
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Taggers.TagProducer.TaggerEventSource">
+            <summary>
+            event source for this producer
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Taggers.TagProducer.EventSource">
+            <summary>
+            simple event source for tag producer
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.AutomaticCompletion.Taggers.TagProducer.EventSource.OnHighlightChanged">
+            <summary>
+            let async view tagger know that underlying highlight has been changed
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.Classification.AbstractSyntacticClassificationTaggerProvider.Tagger">
+            <summary>
+            A classifier that operates only on the syntax of the source and not the semantics.  Note:
+            this class operates in a hybrid sync/async manner.  Specifically, while classification
+            happens synchronously, it may be synchronous over a parse tree which is out of date.  Then,
+            asynchronously, we will attempt to get an up to date parse tree for the file. When we do, we
+            will determine which sections of the file changed and we will use that to notify the editor
+            about what needs to be reclassified.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.Classification.AbstractSyntacticClassificationTaggerProvider.Tagger.LastLineCache">
+            <summary>
+            it is a helper class that encapsulates logic on holding onto last classification result
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.NavigationBar.NavigationBarController">
+            <summary>
+            The controller for navigation bars.
+            </summary>
+            <remarks>
+            The threading model for this class is simple: all non-static members are affinitized to the
+            UI thread.
+            </remarks>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.NavigationBar.NavigationBarController.modelTask">
+            <summary>
+            The computation of the last model.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.NavigationBar.NavigationBarController.StartModelUpdateAndSelectedItemUpdateTasks(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Starts a new task to compute the model based on the current text.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.NavigationBar.NavigationBarController.ComputeModel(Roslyn.Services.IDocument,Microsoft.VisualStudio.Text.ITextVersion,System.Threading.CancellationToken)">
+            <summary>
+            Computes a model for the given snapshot.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.NavigationBar.NavigationBarController.StartSelectedItemUpdateTask(System.Int32,System.Boolean)">
+            <summary>
+            Starts a new task to compute what item should be selected.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.NavigationBar.NavigationBarController.versionStampOfFullListPushedToPresenter">
+            <summary>
+            If we have pushed a full list to the presenter in response to a focus event, this
+            contains the version stamp of the list that was pushed. It is null if the last thing
+            pushed to the list was due to a caret move or file change.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.NavigationBar.NavigationBarController.PresenterAlreadyHaveUpToDateFullList(System.Threading.CancellationToken)">
+            <summary>
+            Check if the presenter has already been pushed the full model that corresponds to the
+            current buffer's project version stamp.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.NavigationBar.NavigationBarController.ProcessItemSelectionSynchronously(Roslyn.Services.Editor.NavigationBarItem,System.Threading.CancellationToken)">
+            <summary>
+            Process the selection of an item synchronously inside a wait context.
+            </summary>
+            <param name="item">The selected item.</param>
+            <param name="cancellationToken">A cancellation token from the wait context.</param>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IInlineRenameService">
+            <summary>
+            Provides services for starting an interactive rename session.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IInlineRenameService.StartInlineSession(Microsoft.VisualStudio.Text.ITextSnapshot,Roslyn.Compilers.Common.CommonSyntaxToken,System.Threading.CancellationToken)">
+            <summary>
+            Starts an interactive rename session. If an existing inline session was active, it will
+            commit the previous session, possibly causing changes to the text buffer.
+            </summary>
+            <param name="snapshot">The ITextSnapshot containing the triggerToken.</param>
+            <param name="triggerToken">The triggerToken itself.</param>
+            <param name="cancellationToken">An optional cancellation token.</param>
+            <returns>The rename session.</returns>
+        </member>
+        <member name="P:Roslyn.Services.Editor.IInlineRenameService.ActiveSession">
+            <summary>
+            Returns the currently active inline session, or null if none is active.
+            </summary>
+        </member>
+        <member name="E:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameService.ActiveSessionChanged">
+            <summary>
+            Raised when the ActiveSession property has changed.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.NavigationBar.NavigationBarModel.TextVersion">
+            <summary>
+            The ITextVersion of the file when this model was computed.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.NavigationBar.NavigationBarModel.ProjectVersionStamp">
+            <summary>
+            The VersionStamp of the project when this model was computed.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.ICustomCommitCompletionProvider">
+            <summary>
+            Interface to implement for a completion provider that wants to provide customized commit
+            behavior.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IFormattingRuleService">
+            <summary>
+            a service that provides information about currently registered formatting rules.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.IFormattingRuleService.CurrentFormattingRules">
+            <summary>
+            returns editor's current formatting rules that formatter will use to format code
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IDeferredQuickInfoContent">
+            <summary>
+            Interface to allow providers to return some sort of quick info content whose creation can be
+            deferred to a later point (and on the ui thread)
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.SignatureHelpParameter.Name">
+            <summary>
+            The name of this parameter.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.SignatureHelpParameter.Documentation">
+            <summary>
+            Documentation for this parameter.  This should normally be presented to the user when
+            this parameter is selected.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.SignatureHelpParameter.PrefixDisplayParts">
+            <summary>
+            Display parts to show before the normal display parts for the parameter.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.SignatureHelpParameter.SuffixDisplayParts">
+            <summary>
+            Display parts to show after the normal display parts for the parameter.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.SignatureHelpParameter.DisplayParts">
+            <summary>
+            Display parts for this parameter.  This should normally be presented to the user as part
+            of the entire signature display.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.SignatureHelpParameter.IsOptional">
+            <summary>
+            True if this parameter is optional or not.  Optional parameters may be presented in a
+            different manner to users.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.SignatureHelpParameter.SelectedDisplayParts">
+            <summary>
+            Display parts for this parameter that should be presented to the user when this
+            parameter is selected.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.SignatureHelpTriggerReason.InvokeSignatureHelpCommand">
+            <summary>
+            Signature Help was triggered through the 'Invoke Signature Help' command
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.SignatureHelpTriggerReason.TypeCharCommand">
+            <summary>
+            Signature Help was triggered through the 'Type Char' command.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ISignatureHelpProvider.IsTriggerCharacter(Roslyn.Services.IDocument,System.Int32)">
+            <summary>
+            Returns true if the character at the specific position in the text snapshot should
+            trigger completion. Implementers of this will be called on the main UI thread and should
+            only do minimal textual checks to determine if they should be presented.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ISignatureHelpProvider.GetItems(Roslyn.Services.IDocument,System.Int32,Roslyn.Services.Editor.SignatureHelpTriggerInfo,System.Threading.CancellationToken)">
+            <summary>
+            Returns valid signature help items at the specified position in the document.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ISignatureHelpProvider.GetTextSpan(Roslyn.Services.IDocument,Roslyn.Services.Editor.SignatureHelpItem,System.Threading.CancellationToken)">
+            <summary>
+            Gets the preferred spanfor the specified signature help item.  Edits or navigation
+            outside this span will cause signature help to be dismissed.  If the span cannot be
+            determined (for example, if the text has changed and the applicable code can no longer
+            be found), null should be returned. This will cause the signature help session to be
+            dismissed.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ISignatureHelpProvider.GetCurrentParameterIndex(Roslyn.Services.IDocument,System.Int32,Roslyn.Services.Editor.SignatureHelpItem,System.Threading.CancellationToken)">
+            <summary>
+            Returns the specified parameter index that the provided position is at in the text.  If
+            the position is not within any of the parameters, then null should be returned.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ISignatureHelpProvider.GetCurrentParameterName(Roslyn.Services.IDocument,System.Int32,Roslyn.Services.Editor.SignatureHelpItem,System.Threading.CancellationToken)">
+            <summary>
+            Returns the name of specified parameter at the provided position in the text.  If no name
+            was provided, then null should be returned.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ISignatureHelpProvider.GetParameterNames(Roslyn.Services.IDocument,System.Int32,Roslyn.Services.Editor.SignatureHelpItem,System.Threading.CancellationToken)">
+            <summary>
+            Returns the all specified parameter names at the provided position in the text.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ICompletionRules.MatchesFilterText(Roslyn.Services.CompletionItem,System.String,Roslyn.Services.CompletionTriggerInfo)">
+            <summary>
+            Returns true if the completion item matches the filter text typed so far.  Returns 'true'
+            ff the completion item matches and should be included in the filtered completion
+            results, false if it should not be, and null if the determination should be left to the
+            next ICompletionRules to determine.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ICompletionRules.IsBetterFilterMatch(Roslyn.Services.CompletionItem,Roslyn.Services.CompletionItem,System.String,Roslyn.Services.CompletionTriggerInfo)">
+            <summary>
+            Returns 'true' if item1 is a better completion item than item2 given the provided filter
+            text, 'false' if it is not better, and 'null' if the determination should be left to the
+            next ICompletionRules to determine.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.ICompletionRules.CompletionItemComitted(Roslyn.Services.CompletionItem)">
+            <summary>
+            Called by completion engine when a completion item is committed.  Completion rules can
+            use this information to affect future calls to MatchesFilterText or IsBetterFilterMatch.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Completion.Controller.IsPotentionalFilterCharacter(Roslyn.Services.Editor.Commands.TypeCharCommandArgs)">
+            <summary>
+            A potential filter character is something that can filter a completion lists and is
+            *guaranteed* to not be a commit character.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.Completion.Controller.ModelComputation.initialUnfilteredModel">
+            <summary>
+            Set when the first compute task completes its work and creates the initial list of
+            items.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.IGoBackMarkerService.HACK_IsCreatingGoBackMarker(Microsoft.VisualStudio.Text.ITextBuffer)">
+            <summary>
+            HACK - remove! For performance reasons we currently need to know whether or not we are
+            creating the editors "GoBackMarkers". This is because they synchronously call into our
+            ITextStructureNavigator on every caret move. By default that causes us to block until a
+            parse is complete, which is terrible for typing performance.  With this hack in place, we
+            defer to the Natural Language ITextStructureNavigator instead.  Dev11 bug 153227 is filed
+            to track getting the editor to address this problem internally, instead of us having to
+            do this.
+            
+            NOTE: this exists on this interface, because we need to ask about the active view, and
+            use the shim specific types, so it needs to be something that is implemented by the
+            hosts.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IContentTypeLanguageService">
+            <summary>
+            Service to provide the default content type for a language.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.QuickInfo.Controller.ModelComputation.currentModel">
+            <summary>
+            Set to whatever model we've currently computed.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextSnapshotExtensions.FormatAndApplyToBuffer(Microsoft.VisualStudio.Text.ITextSnapshot,System.Threading.CancellationToken)">
+            <summary>
+            format given snapshot and apply text chagnes to buffer
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextSnapshotExtensions.FormatAndApplyToBuffer(Microsoft.VisualStudio.Text.ITextSnapshot,Roslyn.Compilers.TextSpan,System.Threading.CancellationToken)">
+            <summary>
+            format given snapshot and apply text chagnes to buffer
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextSnapshotExtensions.GetLeadingWhitespaceOfLineAtPosition(Microsoft.VisualStudio.Text.ITextSnapshot,System.Int32)">
+            <summary>
+            Returns the leading whitespace of the line located at the specified position in the given snapshot.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextSnapshotExtensions.CharAt(Microsoft.VisualStudio.Text.ITextSnapshot,System.Int32)">
+            <summary>
+            Get the character at the given position.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IOptionsService">
+            <summary>
+            factory to return feature specific options. it will read statically defined feature options
+            when created
+            
+            TODO : dynamic options?
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IOptionsService.GetAllFeatureOptions">
+            <summary>
+            return all feature options registered to the option service
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IOptionsService.GetOption``1(Roslyn.Services.Editor.OptionKey{``0})">
+            <summary>
+            get value for the option
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IOptionsService.SetOption``1(Roslyn.Services.Editor.OptionKey{``0},``0)">
+            <summary>
+            set value to the option
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IOptionsService.ResetOption``1(Roslyn.Services.Editor.OptionKey{``0})">
+            <summary>
+            reset the option to its default value
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IOptionsService.ResetOptions">
+            <summary>
+            reset all options to their defalut values
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IOptionsService.Persist">
+            <summary>
+            save current option values to the storage
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Options.OptionsService.Persistence">
+            <summary>
+            repository takes care of persisting options in the option service
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Options.OptionsService.Persistence.Persist">
+            <summary>
+            persist current states to storage
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Options.OptionsService.FeatureOptions">
+            <summary>
+            provide options for a specific feature and support a way to save/load them to/from a repository
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IFeatureOptions">
+            <summary>
+            Encapsulates all the options available to a specific feature.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IFeatureOptions.GetAllOptionDescriptions">
+            <summary>
+            get all option descriptions belong to this feature
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IFeatureOptions.GetOption``1(Roslyn.Services.Editor.OptionKey{``0})">
+            <summary>
+            get current value for the option
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IFeatureOptions.SetOption``1(Roslyn.Services.Editor.OptionKey{``0},``0)">
+            <summary>
+            set new value for the option
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IFeatureOptions.ResetOption``1(Roslyn.Services.Editor.OptionKey{``0})">
+            <summary>
+            reset the option to its default value
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IFeatureOptions.ResetOptions">
+            <summary>
+            reset all options to its default value
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.IFeatureOptions.Feature">
+            <summary>
+            The feature that this provides options for.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Options.PersistenceComponentOptions">
+            <summary>
+            options for the persistence component.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Utilities.AutomaticCodeChangeMergePolicy">
+            <summary>
+            a merge policy that should be used for any automatic code changes that could happen in sequences so that
+            all those steps are shown to users as one undo transaction rather than multiple ones
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Formatting.Indentation.AbstractSmartTokenFormatterCommandHandler.CanHandleOurselves(Roslyn.Services.Editor.IBufferView,Microsoft.VisualStudio.Text.ITextSnapshotLine)">
+            <summary>
+            check whether we can smart indent ourselves. we only attempt to smart indent ourselves
+            if the line in subject buffer we do smart indenting maps back to the view as it is and
+            if it starts from the begining of the line
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Formatting.Indentation.AbstractSmartTokenFormatterCommandHandler.EditorHandled(Roslyn.Services.Editor.IBufferView)">
+            <summary>
+            check whether editor smart indenter mechanism handled this case already
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Formatting.Indentation.AbstractSmartTokenFormatterCommandHandler.TryFormatUsingTokenFormatter(Roslyn.Services.Editor.IBufferView,Roslyn.Services.IDocument,Microsoft.VisualStudio.Text.ITextSnapshotLine,System.Int32,System.Collections.Generic.IEnumerable{Roslyn.Services.Formatting.IFormattingRule},System.Threading.CancellationToken)">
+            <summary>
+            check whether we can do automatic formatting using token formatter instead of smart indenter for the "enter" key
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Formatting.Indentation.AbstractSmartTokenFormatterCommandHandler.CreateEditTransaction(Roslyn.Services.Editor.IBufferView,System.String)">
+            <summary>
+            create caret preserving edit transaction
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.SignatureHelp.Controller.ModelComputation.currentModel">
+            <summary>
+            Set to whatever model we've currently computed.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCompletionRulesFactoryNames.RoslynCompletionRulesFactory">
+            <summary>
+            Completion Rules Factory for Roslyn
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.DiagnosticsEventArgs.Block">
+            <summary>
+            The block of diagnostics referenced by the event.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Interactive.CommonInteractiveEngine.ProcessStarting(Roslyn.Services.InteractiveHostOptions)">
+            <summary>
+            Invoked by <see cref="T:Roslyn.Services.InteractiveHostProcess"/> when a new process is being started.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Extensions.GetTextSnapshot(Roslyn.Compilers.IText)">
+            <summary>
+            Returns the ITextSnapshot behind this IText, if it was created from one.
+            </summary>
+            <exception cref="T:System.ArgumentException">
+            The IText was not created by this factory.
+            </exception>
+            <returns>The underlying ITextSnapshot.</returns>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Extensions.TryGetTextSnapshot(Roslyn.Compilers.IText)">
+            <summary>
+            Returns the ITextSnapshot behind this IText, or null if it wasn't created from one.
+            </summary>
+            <returns>The underlying ITextSnapshot.</returns>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Extensions.TryGetDocument(Roslyn.Compilers.IText,Roslyn.Services.IDocument@)">
+            <summary>
+            Tries to get the document corresponding to the text from the current solution associated 
+            with the text's container. If the document does not contain the exact text a document from 
+            a new solution containing the specified text is constructed. If no document is associated 
+            with the specified text's container, or the text's container isn't associated with a workspace,
+            then the method returns false.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Extensions.TryGetDocumentFromInProgressSolution(Roslyn.Compilers.IText,Roslyn.Services.IDocument@)">
+            <summary>
+            Tries to get the document corresponding to the text from the current in-progress solution 
+            assocated with the text's container. If the document does not contain the exact text a document 
+            from a new solution containing the specified text is constructed. If no document is associated
+            with the specified text's container, or the text's container isn't associated with a workspace,
+            then the method returns false.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Extensions.TextBufferContainer">
+            <summary>
+            ITextBuffer implementation of ITextContainer
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Extensions.TextBufferContainer.textContainerMap">
+            <summary>
+            A weak map of all create ITextBuffers and their associated ITextContainer
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Extensions.TextSnapshotText">
+            <summary>
+            ITextSnapshot implementation of IText
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Extensions.TextSnapshotText.snapshot">
+            <summary>
+            The ITextSnapshot backing the IText instance
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Extensions.TextSnapshotText.textSnapshotMap">
+            <summary>
+            A weak map of all create TextSnapshotText's and their associated IText
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Extensions.TextSnapshotText.Line">
+            <summary>
+            ITextLine implementation for the editor implementation of IText
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.Diagnostics.WorkspaceDiagnosticProvider">
+            <summary>
+            A diagnostic provider that supplies diagnostics for the primary workspace.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IDiagnosticProvider">
+            <summary>
+            Returns Roslyn diagnostics from the workspace.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IDiagnosticProvider.GetAvailableDiagnostics">
+            <summary>
+            Returns the currently available diagnostics.
+            </summary>
+        </member>
+        <member name="E:Roslyn.Services.Editor.IDiagnosticProvider.DiagnosticsUpdated">
+            <summary>
+            An event that is raised when the diagnostics have changed.  
+            
+            When an event handler is newly added, this even will fire for the currently available diagnostics and then
+            afterward for any changes since.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.Diagnostics.WorkspaceDiagnosticProvider.actionName">
+            <summary>
+            string that we need to pass as the action name to the worker queue.
+            It is computed, so we want to cache it.
+            = GetType() + ".CollectErrorsAfterDelay"
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Diagnostics.WorkspaceDiagnosticProvider.ClearDiagnostics">
+            <summary>
+            Cancel all work and clear all project diagnostics
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Diagnostics.WorkspaceDiagnosticProvider.ClearDiagnostics_NoLock">
+            <summary>
+            Cancel all work and clear all project diagnostics
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Diagnostics.WorkspaceDiagnosticProvider.ClearProjectDiagnostics(Roslyn.Services.ProjectId)">
+            <summary>
+            Clear project diagnostics and notify handlers
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Diagnostics.WorkspaceDiagnosticProvider.ClearProjectDiagnostics_NoLock(Roslyn.Services.ProjectId)">
+            <summary>
+            Clear project diagnostics and notify handlers
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.Diagnostics.WorkspaceDiagnosticProvider.BlockId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Interactive.CommandArgumentsParser.ParsePath(System.String,System.Int32@,System.String@)">
+            <summary>
+            Parses an optional path argument. Path is a double-quoted string with no escapes.
+            </summary>
+            <param name="args">Arguments.</param>
+            <param name="i">Current position in <paramref name="args"/>.</param>
+            <param name="path">The path (might be incomplete if closing quote is missing) or null if the argument is missing.</param>
+            <returns>True iff parsing succeeds.</returns>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Interactive.CommandArgumentsParser.ParseTrailingTrivia(System.String,System.Int32@)">
+            <summary>
+            Parses an optional trailing single-line C# comment, whitespace and line breaks.
+            </summary>
+            <param name="args">Arguments.</param>
+            <param name="i">Current position in <paramref name="args"/>.</param>
+            <returns>True iff parsing succeeds.</returns>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Interactive.CommandArgumentsParser.ParseQuotedString(System.String,System.Int32@,System.String@)">
+            <summary>
+            Parses an optional double-quoted string argument. The string may contain backslash-escaped quotes and backslashes.
+            </summary>
+            <param name="args">Arguments.</param>
+            <param name="i">Current position in <paramref name="args"/>.</param>
+            <param name="result">The string.</param>
+            <returns>True iff parsing succeeds.</returns>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.Interactive.InertClassifierProvider">
+            <summary>
+            A classifier provider that caches the classification results from actual classifiers and
+            stores it on the text buffer so they can be used from that point on.  Used for interactive
+            buffers that have been reset but which we still want to look good.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.CommandState">
+            <summary>
+            Represents the various states that a command might have.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.CommandState.IsAvailable">
+            <summary>
+            If true, the command should be visible and enabled in the UI.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.CommandState.IsChecked">
+            <summary>
+            If true, the command should appear as checked (i.e. toggled) in the UI.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.CommandState.DisplayText">
+            <summary>
+            If specified, returns the custom text that should be displayed in the UI.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.CopyToInteractiveCommandArgs">
+            <summary>
+            Arguments for the copy to interactive command.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.ExecuteInInteractiveCommandArgs">
+            <summary>
+            Arguments for the execute in interactive command.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.CopyCommandArgs">
+            <summary>
+            Arguments for the copy command
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.CutCommandArgs">
+            <summary>
+            Arguments for the cut command
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.ExtractMethodCommandArgs">
+            <summary>
+            Arguments for the rename command.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.FindReferencesCommandArgs">
+            <summary>
+            Arguments for find references
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.FormatSelectionCommandArgs">
+            <summary>
+            Arguments for the Format Selection command being invoked.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.PredefinedCommandHandlerNames">
+            <summary>
+            Command handler names
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.AutomaticCompletion">
+            <summary>
+            Command handler name for Automatic Pair Completion
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.AutomaticLineEnder">
+            <summary>
+            Command handler name for Automatic Line Ender
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.CommentSelection">
+            <summary>
+            Command handler name for Comment Selection.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.Commit">
+            <summary>
+            Command handler name for Commit.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.Completion">
+            <summary>
+            Command handler name for Completion.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.CorrectCase">
+            <summary>
+            Command handler name for Case Correction.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.DocumentationComments">
+            <summary>
+            Command handler name for Documentation Comments.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.EndConstruct">
+            <summary>
+            Command handler name for End Construct.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.ExtractMethod">
+            <summary>
+            Command handler name for Extract Method
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.FindReferences">
+            <summary>
+            Command handler name for Find References.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.FormatDocument">
+            <summary>
+            Command handler name for Format Document.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.GoToDefinition">
+            <summary>
+            Command handler name for Go to Definition.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.Indent">
+            <summary>
+            Command handler name for Indent.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.NavigateToHighlightedReference">
+            <summary>
+            Command handler name for Navigate to Highlighted Reference.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.OrganizeDocument">
+            <summary>
+            Command handler name for Organize Document.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.QuickInfo">
+            <summary>
+            Command handler name for Quick Info.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.Rename">
+            <summary>
+            Command handler name for Rename.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCommandHandlerNames.SignatureHelp">
+            <summary>
+            Command handler name for Signature Help.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.RenameCommandArgs">
+            <summary>
+            Arguments for the rename command.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IOptionsSerializer">
+            <summary>
+            serialize given input to string that will be saved in configuration file
+            
+            input is normalized to (option name, value) pair for serializer
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IDiagnosticService.GetAvailableDiagnostics">
+            <summary>
+            Returns the currently available diagnostics.
+            </summary>
+        </member>
+        <member name="E:Roslyn.Services.Editor.IDiagnosticService.DiagnosticsUpdated">
+            <summary>
+            An event that is raised when the diagnostics are updated.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCompletionProviderNames.Keyword">
+            <summary>
+            Completion provider for language keywords.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCompletionProviderNames.Symbol">
+            <summary>
+            Completion provider for language symbols.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCompletionProviderNames.SpeculativeT">
+            <summary>
+            Completion provider for C# speculative "T" symbol.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCompletionProviderNames.ContextualKeyword">
+            <summary>
+            Completion provider for contextual keywords.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCompletionProviderNames.ObjectCreation">
+            <summary>
+            Completion provider that preselects an appropriate type when creating a new object.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.PredefinedCompletionProviderNames.Enum">
+            <summary>
+            Completion provider that comes up and provides Enum values in appropriate contexts.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.Classification.SignatureHelpClassifierProvider.ClassifiableContentClassifier">
+             <summary>
+             This class looks in the property bag of the buffer it is asked to classify for either an
+             IClassifiableContent, or an ISignatureHelpSession with a selected signature that is an
+             IClassifiableContent.  If it finds either, it uses it to classify the text in the buffer.
+            
+             This system allows us to pre-compute the classification for tooltips as we're building up
+             the strings and we know the types of things we're adding, instead of requiring a classifier
+             that can re-scan out the syntax we put into the tooltip.
+             </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.Classification.ClassificationTypeDefinitions">
+            <summary>
+            Class defines 3 items for every classification type - 
+            TypeName, Type placeholder and Format definition.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.ClassName">
+            <summary>
+              Looks up a localized string similar to Roslyn - User Types (Classes).
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.DelegateName">
+            <summary>
+              Looks up a localized string similar to Roslyn - User Types (Delegates).
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.DocumentationCommentXmlAttributeName">
+            <summary>
+              Looks up a localized string similar to Roslyn - XML Doc Comment Attribute Name.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.DocumentationCommentXmlAttributeQuotes">
+            <summary>
+              Looks up a localized string similar to Roslyn - XML Doc Comment Attribute Quotes.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.DocumentationCommentXmlAttributeValue">
+            <summary>
+              Looks up a localized string similar to Roslyn - XML Doc Comment Attribute Value.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.DocumentationCommentXmlCDataSection">
+            <summary>
+              Looks up a localized string similar to Roslyn - XML Doc Comment CData Section.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.DocumentationCommentXmlComment">
+            <summary>
+              Looks up a localized string similar to Roslyn - XML Doc Comment Xml Comment.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.DocumentationCommentXmlDelimiter">
+            <summary>
+              Looks up a localized string similar to Roslyn - XML Doc Comment Delimiter.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.DocumentationCommentXmlText">
+            <summary>
+              Looks up a localized string similar to Roslyn - XML Doc Comment Text.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.EnumName">
+            <summary>
+              Looks up a localized string similar to Roslyn - User Types (Enums).
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.InterfaceName">
+            <summary>
+              Looks up a localized string similar to Roslyn - User Types (Interfaces).
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.ModuleName">
+            <summary>
+              Looks up a localized string similar to Roslyn - User Types (Modules).
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.Operator">
+            <summary>
+              Looks up a localized string similar to Roslyn - Operator.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.PreprocessorKeyword">
+            <summary>
+              Looks up a localized string similar to Roslyn - Preprocessor Keyword.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.PreprocessorText">
+            <summary>
+              Looks up a localized string similar to Roslyn - Preprocessor Text.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.Punctuation">
+            <summary>
+              Looks up a localized string similar to Roslyn - Punctuation.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.StructName">
+            <summary>
+              Looks up a localized string similar to Roslyn - User Types (Structures).
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.TypeParameterName">
+            <summary>
+              Looks up a localized string similar to Roslyn - User Types (Type parameters).
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.UnnecessaryCode">
+            <summary>
+              Looks up a localized string similar to Roslyn - Unnecessary Code.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.VerbatimString">
+            <summary>
+              Looks up a localized string similar to Roslyn - Verbatim String.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.XmlAttributeName">
+            <summary>
+              Looks up a localized string similar to Roslyn - VB XML Attribute Name.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.XmlAttributeQuotes">
+            <summary>
+              Looks up a localized string similar to Roslyn - VB XML Attribute Quotes.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.XmlAttributeValue">
+            <summary>
+              Looks up a localized string similar to Roslyn - VB XML Attribute Value.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.XmlCDataSection">
+            <summary>
+              Looks up a localized string similar to Roslyn - VB XML CData Section.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.XmlComment">
+            <summary>
+              Looks up a localized string similar to Roslyn - VB XML Comment.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.XmlDelimiter">
+            <summary>
+              Looks up a localized string similar to Roslyn - VB XML Delimiter.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.XmlEmbeddedExpression">
+            <summary>
+              Looks up a localized string similar to Roslyn - VB XML Embedded Expression.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.XmlEntityReference">
+            <summary>
+              Looks up a localized string similar to Roslyn - VB XML Entity Reference.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.XmlName">
+            <summary>
+              Looks up a localized string similar to Roslyn - VB XML Name.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.XmlProcessingInstruction">
+            <summary>
+              Looks up a localized string similar to Roslyn - VB XML Processing Instruction.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Implementation.Classification.ClassificationStrings.XmlText">
+            <summary>
+              Looks up a localized string similar to Roslyn - VB XML Text.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.CodeActions.CodeIssueBufferManager">
+            <summary>
+            The engine that actually computes all the code issues for a buffer.  Other services (like
+            light bulbs, squiggles, faded classifications, and the error list) sit on top of this.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.CodeActions.CodeIssueBufferManager.TaggerArbiter">
+            <summary>
+            Simple class that sits between a single buffer tagger and N possible view taggers. 
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.CodeActions.CodeIssueTagProducer">
+            <summary>
+            Implementation of a tag producer that walks the tree and determines which quick fixes should
+            be available.  Note: as a design detail, we merge quick fixes that start at the same position
+            into a single smart tag.  That smart tag will have a length equal to the max length of a
+            quick fix contained within.  If we do not do this, then we can end up in the situation where
+            multiple smart tags would be presented at the same position.  There would then be no way for
+            the user to select the specific one they wanted. 
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.CodeActions.CodeRefactoringSuggestionTagProducer">
+            <summary>
+            Implementation of a tag producer that walks the tree and determines which quick fixes should
+            be available.  Note: as a design detail, we merge quick fixes that start at the same position
+            into a single smart tag.  That smart tag will have a length equal to the max length of a
+            quick fix contained within.  If we do not do this, then we can end up in the situation where
+            multiple smart tags would be presented at the same position.  There would then be no way for
+            the user to select the specific one they wanted. 
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.CodeActions.SquiggleViewTagger">
+            <summary>
+            Specialization of the normal AsyncViewTagger that allows us to track the caret location of
+            the user and use that to filter the set of visible smart tags down to those relevant based
+            on their position.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.Commands.CommandHandlerService">
+            <summary>
+            A service representing a handlers of command handlers for a view or buffer.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.Commands.CommandHandlerService.commandHandlersByTypeAndContentType">
+            <summary>
+            This dictionary acts as a cache so we can avoid having to look through the full list of
+            handlers every time we need handlers of a specific type, for a given content type. The
+            value of each key is a class of type List&lt;ICommandHandler&lt;T&gt;&gt;, but since
+            there is no way to express that in a generic way under .NET I must simply use "object"
+            as the type associated with each key.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Commands.CommandHandlerService.GetHandlers``1(Microsoft.VisualStudio.Utilities.IContentType)">
+            <summary>
+            Returns a list of ICommandHandlers of a given type that apply to a given content type.
+            The result is cached so repeated calls are fast.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Commands.CommandHandlerService.ExecuteHandlers``1(System.Collections.Generic.IList{Roslyn.Services.Editor.ICommandHandler{``0}},``0,System.Action)">
+            <summary>
+            Executes the list of command handlers in order, starting at index, passing args to each
+            one. If all handlers choose to call the nextHandler lambda, the lastHandler lambda is
+            called.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Commands.CommandHandlerService.GetCommandState``1(System.Collections.Generic.IList{Roslyn.Services.Editor.ICommandHandler{``0}},``0,System.Func{Roslyn.Services.Editor.CommandState})">
+            <summary>
+            Executes the list of command handlers in order, starting at index, passing args to each
+            one. If all handlers choose to call the nextHandler lambda, the lastHandler lambda is
+            called.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.Commands.CommandHandlerServiceFactory">
+            <summary>
+            This component manages the lifetimes of command handlers. It is a singleton that is shared
+            between any components that import it.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Commands.CommandHandlerServiceFactory.CreateCollectionForView(Microsoft.VisualStudio.Text.Editor.ITextView)">
+            <summary>
+            Returns a collection of ICommandHandlers that match the appropriate content types for this view.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Commands.CommandHandlerServiceFactory.CreateCollectionForBuffer(Microsoft.VisualStudio.Text.ITextBuffer)">
+            <summary>
+            Returns a collection of ICommandHandlers that match the appropriate content type of the given buffer.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.ExecuteCommand(Roslyn.Services.Editor.Commands.CommentSelectionCommandArgs,System.Action)">
+            <summary>
+            Comment the selected spans, and reset the selection.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.ExecuteCommand(Roslyn.Services.Editor.Commands.UncommentSelectionCommandArgs,System.Action)">
+            <summary>
+            Uncomment the selected spans, and reset the selection.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.CollectEdits(Microsoft.VisualStudio.Text.NormalizedSnapshotSpanCollection,System.Collections.Generic.List{Roslyn.Compilers.TextChange},System.Collections.Generic.List{Microsoft.VisualStudio.Text.ITrackingSpan},Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.Operation)">
+             <summary>
+             Add the necessary edits to the given spans. Also collect tracking spans over each span.
+            
+             Internal so that it can be called by unit tests.
+             </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.CommentSpan(Microsoft.VisualStudio.Text.SnapshotSpan,System.Collections.Generic.List{Roslyn.Compilers.TextChange})">
+            <summary>
+            Add the necessary edits to comment out a single span.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.InsertText(System.Collections.Generic.List{Roslyn.Compilers.TextChange},System.Int32,System.String)">
+            <summary>
+            record "Insert text" text changes
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.DeleteText(System.Collections.Generic.List{Roslyn.Compilers.TextChange},Roslyn.Compilers.TextSpan)">
+            <summary>
+            record "Delete text" text changes
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.UncommentSpan(Microsoft.VisualStudio.Text.SnapshotSpan,System.Collections.Generic.List{Roslyn.Compilers.TextChange},System.Collections.Generic.List{Microsoft.VisualStudio.Text.ITrackingSpan})">
+            <summary>
+            Add the necessary edits to uncomment out a single span.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.ApplyCommentToNonBlankLines(System.Collections.Generic.List{Roslyn.Compilers.TextChange},System.Tuple{Microsoft.VisualStudio.Text.ITextSnapshotLine,Microsoft.VisualStudio.Text.ITextSnapshotLine},System.Int32)">
+            <summary>
+            Adds edits to comment out each non-blank line, at the given indent.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.DetermineSmallestIndent(Microsoft.VisualStudio.Text.SnapshotSpan,System.Tuple{Microsoft.VisualStudio.Text.ITextSnapshotLine,Microsoft.VisualStudio.Text.ITextSnapshotLine})">
+            <summary> Given a set of lines, find the minimum indent of all of the non-blank, non-whitespace lines.</summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.DetermineFirstAndLastLine(Microsoft.VisualStudio.Text.SnapshotSpan)">
+            <summary>
+            Given a span, find the first and last line that are part of the span.  NOTE: If the span ends in column zero,
+            we back up to the previous line, to handle the case where the user used shift + down to select a bunch of
+            lines.  They probably don't want the last line commented in that case.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.CommentSelection.AbstractCommentUncommentSelectionCommandHandler.SpanIncludesAllTextOnIncludedLines(Microsoft.VisualStudio.Text.SnapshotSpan)">
+            <summary>
+            Returns true if the span includes all of the non-whitespace text on the first and last line.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IContentTypeAndTextViewRoleMetadata">
+            <summary>
+            Metadata which includes Content Types and Text View Roles
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IOptionsProviderMetadata">
+            <summary>
+            required metadata for IOptionsProvider
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IFeatureMetadata">
+            <summary>
+            This interface declares a contract for MEF to import metadata in a strongly-typed fashion.
+            The name of the interface is unimportant, only the property names and types are important.
+            This interface matches the Roslyn.Services.Threading.FeatureAttribute's public properties.
+            Whatever you specify in a feature like this [Feature("Outlining")] will become available in
+            this interface's properties (FeatureName will be set to "Outlining")
+            </summary>
+            <remarks>A good link is: http://mef.codeplex.com/wikipage?title=Exports%20and%20Metadata
+            </remarks>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IOptionsMigratorMetadata">
+            <summary>
+            provide information on which features and versions this migrator supports
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IOrderableContentTypeAndTextViewRoleMetadata">
+            <summary>
+            Metadata which includes Ordering, Content Types and Text View Roles
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.FormattingExtensions.FormatWithEditorRules(Roslyn.Services.IDocument,System.Threading.CancellationToken)">
+            <summary>
+            format document with current formatting options and rules from editor
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.FormattingExtensions.FormatWithEditorRules(Roslyn.Services.IDocument,Roslyn.Compilers.TextSpan,System.Threading.CancellationToken)">
+            <summary>
+            format document with current formatting options and rules from editor
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.FormattingExtensions.FormatWithEditorRules(Roslyn.Services.IDocument,System.Collections.Generic.IEnumerable{Roslyn.Compilers.TextSpan},System.Threading.CancellationToken)">
+            <summary>
+            format document with current formatting options and rules from editor
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.FormattingExtensions.FormatWithEditorRules(Roslyn.Services.IDocument,Roslyn.Compilers.SyntaxAnnotation,System.Threading.CancellationToken)">
+            <summary>
+            format document with current formatting options and rules from editor
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Options.ComponentOnOffOptions">
+            <summary>
+            options to indicate whether a certain component in Roslyn is enabled or not
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.ContentTypes.ContentTypeDefinitions.RoslynContentTypeDefinition">
+            <summary>
+            Definition of a content type that is a base definition for all content types supported by Roslyn.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Debugging.ILanguageDebugInfoService.GetDataTipSpanAndText(Microsoft.VisualStudio.Text.SnapshotPoint,Microsoft.VisualStudio.Text.SnapshotSpan@,System.String@,System.Threading.CancellationToken)">
+            <summary>
+            Find an appropriate span to pass the debugger given a point in a snapshot.  Optionally
+            pass back a string to pass to the debugger instead if no good span can be found.  For
+            example, if the user hovers on "var" then we actually want to pass the fully qualified
+            name of the type that 'var' binds to to the debugger.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.IContentTypeExtensions.MatchesAny(Microsoft.VisualStudio.Utilities.IContentType,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Test whether an extension matches a content type.
+            </summary>
+            <param name="dataContentType">Content type (typically of a text buffer) against which to
+            match an extension.</param>
+            <param name="extensionContentTypes">Content types from extension metadata.</param>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Extensions.IProjectionBufferFactoryServiceExtensions.RoslynPreviewContentTypeDefinition">
+            <summary>
+            Nasty hack so we can get view taggers working on our preview surfaces.  We need to define
+            both projection and text in order for this to work.  Talk to JasonMal for he is the only
+            one who understands this.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextSnapshotLineExtensions.GetFirstNonWhitespacePosition(Microsoft.VisualStudio.Text.ITextSnapshotLine)">
+            <summary>
+            Returns the first non-whitespace position on the given line, or null if 
+            the line is empty or contains only whitespace.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextSnapshotLineExtensions.GetFirstNonWhitespaceOffset(Microsoft.VisualStudio.Text.ITextSnapshotLine)">
+            <summary>
+            Returns the first non-whitespace position on the given line as an offset
+            from the start of the line, or null if the line is empty or contains only
+            whitespace.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextSnapshotLineExtensions.GetLastNonWhitespacePosition(Microsoft.VisualStudio.Text.ITextSnapshotLine)">
+            <summary>
+            Returns the last non-whitespace position on the given line, or null if 
+            the line is empty or contains only whitespace.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextSnapshotLineExtensions.IsEmptyOrWhitespace(Microsoft.VisualStudio.Text.ITextSnapshotLine)">
+            <summary>
+            Determines whether the specified line is empty or contains whitespace only.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextSnapshotLineExtensions.GetIndentationFromLinePosition(Microsoft.VisualStudio.Text.ITextSnapshotLine,Microsoft.VisualStudio.Text.Editor.IEditorOptions,System.Int32)">
+            <summary>
+            this is what the editor thinks as a space character
+            c == '\t' || (int)c == 0x200B || char.GetUnicodeCategory == UnicodeCategory.SpaceSeparator;
+            
+            TODO : 
+            once compiler exposes API for a caller to determine whether given char is considered as a whitespace or space
+            in language, we need to conbine that information with editor's to find out correct indentation.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextViewExtensions.GetContentTypes(Microsoft.VisualStudio.Text.Editor.ITextView)">
+            <summary>
+            Collects the content types in the view's buffer graph.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextViewExtensions.MoveToAndWorkAroundBug407033_HACK(Microsoft.VisualStudio.Text.Editor.ITextCaret,Microsoft.VisualStudio.Text.SnapshotPoint)">
+            <summary>
+            HACK HACK HACK HACK HACK: this is working around DevDiv bug 407033, where using MoveTo
+            can cause the text view selection to give out-of-date values. The intent of this being
+            an extension method with a slimy reflection hack is you can simply call this instead of
+            MoveTo.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextViewExtensions.GetOrCreatePerSubjectBufferProperty``1(Microsoft.VisualStudio.Text.Editor.ITextView,Microsoft.VisualStudio.Text.ITextBuffer,System.Object,System.Func{Microsoft.VisualStudio.Text.Editor.ITextView,Microsoft.VisualStudio.Text.ITextBuffer,``0})">
+            <summary>
+            Gets or creates a per subject buffer property.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.ITextViewExtensions.GetOrCreatePerSubjectBufferProperty``1(Microsoft.VisualStudio.Text.Editor.ITextView,Microsoft.VisualStudio.Text.ITextBuffer,System.Object,System.Func{Microsoft.VisualStudio.Text.Editor.ITextView,Microsoft.VisualStudio.Text.ITextBuffer,``0},``0@)">
+            <summary>
+            Gets or creates a per subject buffer property, returning true if it needed to create it.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Extensions.MefExtensions">
+            <summary>
+            Helper class to perform ContentType best-match against a set of extensions. This could
+            become a public service.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.MefExtensions.SelectMatchingExtensions``2(System.Collections.Generic.IEnumerable{System.Lazy{``0,``1}},Microsoft.VisualStudio.Utilities.IContentType[])">
+            <summary>
+            Given a list of extensions that provide content types, filter the list and return that
+            subset which matches the given content type
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.MefExtensions.SelectMatchingExtensions``2(System.Collections.Generic.IEnumerable{System.Lazy{``0,``1}},System.Collections.Generic.IEnumerable{Microsoft.VisualStudio.Utilities.IContentType})">
+            <summary>
+            Given a list of extensions that provide content types, filter the list and return that
+            subset which matches any of the given content types.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Extensions.SpanExtensions">
+            <summary>
+            Extension methods for the editor Span struct
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.SpanExtensions.ToTextSpan(Microsoft.VisualStudio.Text.Span)">
+            <summary>
+            Convert the editor Span instance to the corresponding TextSpan instance
+            </summary>
+            <param name="span"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.TextSpanExtensions.ToSpan(Roslyn.Compilers.TextSpan)">
+            <summary>
+            Convert a TextSpan instance to an Editor Span
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Extensions.TextSpanExtensions.ToSnapshotSpan(Roslyn.Compilers.TextSpan,Microsoft.VisualStudio.Text.ITextSnapshot)">
+            <summary>
+            Convert a TextSpan to a SnapshotSpan on the given ITextSnapshot instance
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.ExtractMethod.AbstractExtractMethodCommandHandler.ApplyChangesToBuffer(Roslyn.Services.ExtractMethodResult,Microsoft.VisualStudio.Text.ITextBuffer,System.Threading.CancellationToken)">
+            <summary>
+            Applies an ExtractMethodResult to the editor.
+            </summary>
+            <returns>true if the edit applied, false otherwise.</returns>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.LineSeparators.LineSeparatorAdornmentManagerProvider">
+            <summary>
+            This factory is called to create the view service that will manage line separators.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.LineSeparators.LineSeparatorTaggerProvider">
+            <summary>
+            This factory is called to create taggers that provide information about where line
+            separators go.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.NavigateTo.NavigateToItemProvider.ConstructSecondarySortString(Roslyn.Services.ISolution,Roslyn.Compilers.Common.ISymbol,System.Boolean,Roslyn.Compilers.Common.CommonLocation)">
+            <summary>
+            Provide a way for the NavigateTo dialog to break ties when items have the same name.
+            We build a string like: "0000x 0000y FullName" where x is the number of method args
+            and y is the number of type arg.  If it is a partial type or method, we also throw on the 
+            filename and offset into the file.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.Outlining.OutliningTaggerProvider">
+            <summary>
+            Shared implementation of the outliner tagger provider.
+            
+            Note: the outliner tagger is a normal buffer tagger provider and not a view tagger provider.
+            This is important for two reason.  The first is that if it were view based then we would lose
+            the state of the collapsed/open regions when they scrolled in and out of view.  Also, if the
+            editor doesn't know about all the regions in the file, then it wouldn't be able to to
+            persist them to the SUO file to persist this data across sessions.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.QuickInfo.ElisionBufferDeferredContent">
+            <summary>
+            Creates quick info content out of the span of an existing snapshot.  The span will be
+            used to create an elision buffer out that will then be displayed in the quick info
+            window.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.InlineRename.Dashboard.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IInlineRenameSession.AddSpan(Microsoft.VisualStudio.Text.SnapshotSpan)">
+            <summary>
+            Adds a span into the rename session.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IInlineRenameSession.AddSpans(Microsoft.VisualStudio.Text.NormalizedSnapshotSpanCollection)">
+            <summary>
+            Adds a set of spans into the rename session.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IInlineRenameSession.Cancel">
+            <summary>
+            Cancels the rename session, and undoes any edits that had been performed by the session.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.IInlineRenameSession.Commit">
+            <summary>
+            Dismisses the rename session, completing the rename operation across all files.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.replacementText">
+            <summary>
+            If non-null, the current text of the replacement. Linked spans added will automatically be updated with this
+            text.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.foregroundTaskScheduler">
+            <summary>
+            The task scheduler for the UI thread.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.asynchronousLocationsSource">
+            <summary>
+            The task which gets rename locations source.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.allRenameLocationsTask">
+            <summary>
+            The task which computes the main rename locations against the original workspace
+            snapshot.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.cancellationTokenSource">
+            <summary>
+            The cancellation token for most work being done by the inline rename session. This
+            includes the <see cref="F:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.allRenameLocationsTask"/> and <see cref="F:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.asynchronousLocationsSource"/>
+            tasks.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.conflictResolutionTask">
+            <summary>
+            This task is a continuation of the renameSpanSourceTask that is the result of computing
+            the resolutions of the rename spans for the current replacementText.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.conflictResolutionTaskCancellationSource">
+            <summary>
+            The cancellation source for <see cref="F:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.conflictResolutionTask"/>.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.ApplyReplacementText(System.String)">
+            <summary>
+            Updates the replacement text for the rename session and propagates it to all live buffers.
+            </summary>
+            <param name="replacementText">The new text for the symbol.</param>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.OpenTextBufferManager">
+            <summary>
+            Manages state for open text buffers.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Implementation.InlineRename.InlineRenameSession.OpenTextBufferManager.trackingSpans">
+            <summary>
+            The list of active tracking spans.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.Rename.RenameCommandHandler.GetTriggerToken(Roslyn.Services.Editor.Commands.RenameCommandArgs,System.Threading.CancellationToken)">
+            <summary>
+            Returns the proper token to rename given the command arguments for the rename. Only
+            minimal verification is done
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Implementation.InlineRename.RenameSessionsChangedEventSource">
+            <summary>
+            A tagger event source to trigger the asynchronous tagger when the rename sessions are changed.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Tagging.AsynchronousTagger`1">
+             <summary>
+             Implementation of an editor ITagger that splits up the work of tagging into background
+             computation (performed by a supplied ITagProducer) and aggregation (performed by this
+             object).
+            
+             As the background computation finds and reports tags, this object collects them and forwards
+             them onto the appropriate listeners.
+             
+             Computed tags from previous runs of the supplied ITagProducer are cached so that they can
+             continue to be returned until background processing is complete.
+             </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.AsynchronousTagger`1.batchChangeNotifier">
+            <summary>
+            The batch change notifier that we use to throttle update to the UI.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TaggerDelay.NearImmediate">
+            <summary>
+            Indicates that the tagger should retag after a short, but imperceptible delay.  This is
+            for features that want to appear instantaneous to the user, but which can wait a short
+            while until a batch of changes has occurred before processing.  Specifically, if a user
+            expects the tag immediately after typing a character or moving the caret, then this
+            delay should be used.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TaggerDelay.Short">
+            <summary>
+            Not as fast as NearImmediate.  A user typing quickly or navigating quickly should not
+            trigger this.  However, any sort of pause will cause it to trigger
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.TaggerDelay.OnIdle">
+            <summary>
+            Indicates that the tagger should run when the user appears to be 
+            idle.  
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Tagging.GraphicsTag">
+            <summary>
+            This needs to be public for testing the AdornmentManager
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Tagging.GraphicsTag.GetGraphics(Microsoft.VisualStudio.Text.Editor.IWpfTextView,System.Windows.Media.Geometry)">
+            <summary>
+            This method allows corresponding adornment manager to ask for a graphical glyph.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Tagging.LineSeparatorTag">
+            <summary>
+            Tag that specifies line separator.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Tagging.LineSeparatorTag.GetGraphics(Microsoft.VisualStudio.Text.Editor.IWpfTextView,System.Windows.Media.Geometry)">
+            <summary>
+            Creates a very long line at the bottom of bounds.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Tagging.BatchChangeNotifier">
+            <summary>
+            Handles the job of batching up change notifications so that don't spam the editor with too
+            many update requests at a time.  Updating the editor can even be paused and resumed at a
+            later point if some feature doesn't want the editor changing while it performs some bit of
+            work.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.BatchChangeNotifier.CoalesceDifferenceCount">
+            <summary>
+            If we get more than this many differences, then we just issue it as a single change
+            notification.  The number has been completely made up without any data to support it.
+            
+            Internal for testing purposes.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.BatchChangeNotifier.workQueue">
+            <summary>
+            The worker we use to do work on the appropriate background or foreground thread.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Tagging.BatchChangeNotifier.lastReportTick">
+            <summary>
+            We keep track of the last time we reported a span, so that if things have been idle for
+            a while, we don't unnecessarily delay the reporting, but if things are busy, we'll start
+            to throttle the notifications.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Shared.Tagging.BatchChangeNotifier.IsPaused">
+            <summary>
+            True if we are currently suppressing UI updates.  While suppressed we still continue
+            doing everything as normal, except we do not update the UI.  Then, when we are no longer
+            suppressed we will issue all pending UI notifications to the editor.  During the time
+            that we're suppressed we will respond to all GetTags requests with the tags we had
+            before we were paused.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Tagging.TagSpanIntervalTree`1">
+            <summary>
+            A tag span interval tree represents an ordered tree data structure to store tag spans in.  It
+            allows you to efficiently find all tag spans that intersect a provided span.  Tag spans are
+            tracked. That way you can query for intersecting/overlapping spans in a different snapshot
+            than the one for the tag spans that were added.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.TextStructureNavigation.AbstractTextStructureNavigatorProvider.TextStructureNavigator.FindLeafNode(Microsoft.VisualStudio.Text.SnapshotSpan,System.Threading.CancellationToken)">
+            <summary>
+            Finds deepest node that covers given <see cref="T:Microsoft.VisualStudio.Text.SnapshotSpan"/>.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.TextStructureNavigation.AbstractTextStructureNavigatorProvider.TextStructureNavigator.TryFindLeafToken(Microsoft.VisualStudio.Text.SnapshotPoint,Roslyn.Compilers.Common.CommonSyntaxToken@,System.Threading.CancellationToken)">
+            <summary>
+            Given position in a text buffer returns the leaf syntax node it belongs to.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.TextStructureNavigation.AbstractTextStructureNavigatorProvider.TextStructureNavigator.SkipSameSpanParents(Roslyn.Compilers.Common.CommonSyntaxNodeOrToken)">
+            <summary>
+            Returns first ancestor of the node which has a span wider than node's span.
+            If none exist, returns the last available ancestor.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Implementation.TextStructureNavigation.AbstractTextStructureNavigatorProvider.TextStructureNavigator.GetEnclosingNode(Roslyn.Compilers.Common.CommonSyntaxNodeOrToken)">
+            <summary>
+            Finds node enclosing current from navigation point of view (that is, some immediate ancestors
+            may be skipped during this process).
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Threading.AsynchronousSerialWorkQueue.pendingWorkWithCurrentCancellationToken">
+            <summary>
+            The queue of tasks that we have to run on the foreground thread, keyed by the DateTime
+            at which they should run. 
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Threading.AsynchronousSerialWorkQueue.timer">
+            <summary>
+            A timer that is used to delay work that we want to happen on the UI thread.  It will be
+            running when we have Foreground items enqueued, and will stop when we don't. The
+            dispatcher timer will run work on the dispatcher thread.  This ensures that enqueued
+            foreground work runs on the proper thread.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Threading.AsynchronousSerialWorkQueue.WaitForPendingBackgroundWork">
+            <summary>
+            Wait until all queued background tasks have been completed.  NOTE: This will NOT pump,
+            and it won't wait for any timer foreground tasks to actually enqueue their respective
+            background tasks - it just waits for the already enqueued background tasks to finish.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Threading.AsynchronousSerialWorkQueue.WaitUntilCompletion_ForTestingPurposesOnly">
+            <summary>
+            Wait until all tasks have been completed.  NOTE that this will do a pumping wait if
+            called on the UI thread. Also, it isn't guaranteed to be stable in the case of tasks
+            enqueuing other tasks in arbitrary orders, though it does support our common pattern of
+            "timer task->background task->foreground task with results"
+            
+            Use this method very judiciously.  Most of the time, we should be able to just use 
+            IAsynchronousOperationListener for tests.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Shared.Utilities.AdornmentManager`1">
+            <summary>
+            UI manager for graphic overlay tags. These tags will simply paint something related to the text.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Utilities.AdornmentManager`1.textView">
+            <summary>View that created us.</summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Utilities.AdornmentManager`1.adornmentLayer">
+            <summary>Layer where we draw adornments.</summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Utilities.AdornmentManager`1.tagAggregator">
+            <summary>Aggregator that tells us where to draw.</summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Utilities.AdornmentManager`1.asyncListener">
+            <summary>Notification system about operations we do</summary>
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Utilities.AdornmentManager`1.invalidatedSpans">
+            <summary>Spans that are invalidated, and need to be removed from the layer..</summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Utilities.AdornmentManager`1.OnLayoutChanged(System.Object,Microsoft.VisualStudio.Text.Editor.TextViewLayoutChangedEventArgs)">
+            <summary>
+            This handler gets called whenever there is a visual change in the view.
+            Example: edit or a scroll.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Utilities.AdornmentManager`1.OnTagsChanged(System.Object,Microsoft.VisualStudio.Text.Tagging.TagsChangedEventArgs)">
+            <summary>
+            This handler is called when tag aggregator notifies us about tag changes.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Utilities.AdornmentManager`1.UpdateInvalidSpans">
+            <summary>
+            MUST BE CALLED ON UI THREAD!!!!   This method touches WPF.
+             
+            This function is used to update invalidates spans.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Utilities.AdornmentManager`1.UpdateSpans_CallOnlyOnUIThread(Microsoft.VisualStudio.Text.NormalizedSnapshotSpanCollection,Microsoft.VisualStudio.Text.ITextSnapshot,System.Boolean)">
+            <summary>
+            MUST BE CALLED ON UI THREAD!!!!   This method touches WPF.
+            
+            This is where we apply visuals to the text. 
+            
+            It happens when another region of the view becomes visible or there is a change in tags.
+            For us the end result is the same - get tags from tagger and update visuals correspondingly.
+            </summary>        
+        </member>
+        <member name="F:Roslyn.Services.Editor.Shared.Utilities.LinkedEditsTracker.trackingSpans">
+            <summary>
+            The list of active tracking spans.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Shared.Utilities.TextViewVisibleSpanTracker.ComputePossiblyVisibleSnapshotSpans(Microsoft.VisualStudio.Text.Editor.ITextView,Microsoft.VisualStudio.Text.ITextSnapshot)">
+            <summary>
+            Returns a set of all visible spans and potentially some invisible ones.
+            In a common scenario of view snapshot matching text snapshot with limited amount of hidden text
+            getting "potential" visible spans could be acceptable cheaper alternative to the more precise GetVisibleSnapshotSpans.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Host.IWaitIndicator.Wait(System.String,System.String,System.Boolean,System.Action{Roslyn.Services.Editor.Host.IWaitContext})">
+            <summary>
+            Schedule the action on the caller's thread and wait for the task to complete.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.BackspaceKeyCommandArgs">
+            <summary>
+            Arguments for the backspace key being pressed.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.DownKeyCommandArgs">
+            <summary>
+            Arguments for the Down arrow key being pressed.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.EscapeKeyCommandArgs">
+            <summary>
+            Arguments for the escape key being typed.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.FormatDocumentCommandArgs">
+            <summary>
+            Arguments for the Format Document command being invoked.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.GoToDefinitionCommandArgs">
+            <summary>
+            Arguments for GoTo Definition.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.OrganizeDocumentCommandArgs">
+            <summary>
+            Arguments for the Organize Document command being invoked.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.PageDownKeyCommandArgs">
+            <summary>
+            Arguments for the page down key being pressed.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.PageUpKeyCommandArgs">
+            <summary>
+            Arguments for the page up key being pressed.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.ReturnKeyCommandArgs">
+            <summary>
+            Arguments for the Return arrow key being pressed.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.OrganizeImportsCommandArgs">
+            <summary>
+            Arguments for the Sort Usings command being invoked.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.TabKeyCommandArgs">
+            <summary>
+            Arguments for the Tab key being pressed.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.ToggleCompletionModeCommandArgs">
+            <summary>
+            Arguments for the Toggle Completion Mode command begin invoked.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.TypeCharCommandArgs">
+            <summary>
+            Arguments for a character being typed.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.Commands.TypeCharCommandArgs.TypedChar">
+            <summary>
+            The character that was typed.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.Commands.UpKeyCommandArgs">
+            <summary>
+            Arguments for the Up arrow key being pressed.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.IOptionsMigrator">
+            <summary>
+            an option migrator that knows how to migrate a feature option from one version to the other version.
+            must be decorated with ExportOptionsMigratorAttribute
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.OptionDescription">
+            <summary>
+            give option's name and type information
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.OptionDescription.Name">
+            <summary>
+            Name for a option
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.OptionDescription.Type">
+            <summary>
+            Type of a option
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.OptionKey`1">
+            <summary>
+            a type safe key for a specific option that belongs to a feature
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.OptionKey`1.Feature">
+            <summary>
+            feature this option is associated with
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.OptionKey`1.Name">
+            <summary>
+            option name
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.DiagnosticItem.#ctor(System.Int32,System.String,System.String,Roslyn.Compilers.DiagnosticSeverity,Roslyn.Services.ProjectId)">
+            <summary>
+            Constructs a diagnostic item.
+            </summary>
+            <param name="code">The error code</param>
+            <param name="id">The "id" for the error (CS????)</param>
+            <param name="message">The error message.</param>
+            <param name="severity">The severity (error/warning)</param>
+            <param name="projectId">The project that the error came from.</param>
+        </member>
+        <member name="M:Roslyn.Services.Editor.DiagnosticItem.#ctor(System.Int32,System.String,System.String,Roslyn.Compilers.DiagnosticSeverity,Roslyn.Services.DocumentId,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Constructs a diagnostic item.
+            </summary>
+            <param name="code">The error code</param>
+            <param name="id">The "id" for the error (CS????)</param>
+            <param name="message">The error message.</param>
+            <param name="severity">The severity (error/warning)</param>
+            <param name="documentId">The document that this diagnostic came from.</param>
+            <param name="mappedLine">0-based line number honoring preprocessor directives</param>
+            <param name="originalLine">Optional 0-based line number ignoring preprocessor directives</param>
+            <param name="mappedColumn">0-based column number honoring preprocessor directives</param>
+            <param name="originalColumn">Optional 0-based column number ignoring preprocessor directives</param>
+            <param name="mappedFilePath">The optional file path to display in the error output, honoring preprocessor directives</param>
+            <param name="originalFilePath">Optional file path to display in the error output, ignoring preprocessor directives</param>
+        </member>
+        <member name="P:Roslyn.Services.Editor.DiagnosticItem.InSource">
+            <summary>
+            Whether this is an error in source. If false, line/column numbers are meaningless and shouldn't be displayed.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.DiagnosticItem.MappedLine">
+            <summary>
+            0-based line number honoring preprocessor directives. Throws InvalidOperationException if not a source error.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.DiagnosticItem.MappedColumn">
+            <summary>
+            0-based column number honoring preprocessor directives. Throws InvalidOperationException if not a source error.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.DiagnosticItem.OriginalLine">
+            <summary>
+            0-based line number ignoring preprocessor directives. Throws InvalidOperationException if not a source error.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.DiagnosticItem.OriginalColumn">
+            <summary>
+            0-based column number ignoring preprocessor directives. Throws InvalidOperationException if not a source error.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Host.IDocumentManager.NavigateToFile(Roslyn.Services.DocumentId)">
+            <summary>
+            Navigates to a given file within a workspace, opening it if necessary.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Host.IDocumentManager.NavigateToFile(Roslyn.Services.DocumentId,Roslyn.Compilers.TextSpan)">
+            <summary>
+            Navigates to the given position in the specified file, opening it if necessary.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Host.IDocumentManager.NavigateToFile(Roslyn.Services.DocumentId,System.Int32,System.Int32)">
+            <summary>
+            Navigates to the given line/offset in the specified file, opening it if necessary.
+            </summary>
+        </member>
+        <member name="M:Roslyn.Services.Editor.Host.IDocumentManager.NavigateToVirtualSpace(Roslyn.Services.DocumentId,System.Int32,System.Int32)">
+            <summary>
+            Navigates to the given virtual location in the specified file, opening it if necessary.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.OutliningSpan.TextSpan">
+            <summary>
+            The span of text to collapse.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.OutliningSpan.HintSpan">
+            <summary>
+            The span of text to display in the hint on mouse hover.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.OutliningSpan.BannerText">
+            <summary>
+            The text to display inside the collapsed region.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.OutliningSpan.AutoCollapse">
+            <summary>
+            Whether or not this region should be automatically collapsed when the 'Collapse to Definitions' command is invoked.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.SignatureHelpItem.IsVariadic">
+            <summary>
+            True if this signature help item can have an unbounded number of arguments passed to it.
+            If it is variadic then the last parameter will be considered selected, even if the
+            selected parameter index strictly goes past the number of defined parameters for this
+            item.
+            </summary>
+        </member>
+        <member name="T:Roslyn.Services.Editor.SymbolRenameInfo">
+            <summary>
+            Represents information about the ability to rename a particular location.
+            </summary>
+        </member>
+        <member name="P:Roslyn.Services.Editor.SymbolRenameInfo.ErrorString">
+            <summary>
+            An error string representing why the given location could not be renamed, and null if
+            the symbol is renamable.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,191 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Roslyn.Services.Editor.VisualBasic
+</name>
+</assembly>
+<members>
+<member name="M:Roslyn.Services.Editor.VisualBasic.Outlining.BannerTextBuilder.AppendParameterList(Roslyn.Compilers.VisualBasic.ParameterListSyntax,System.Boolean)">
+	<summary>
+ Appends a parameter list to the banner text.
+ </summary>
+	<param name="parametersOpt">The <see cref="T:Roslyn.Compilers.VisualBasic.ParameterListSyntax"/> to append. This parameter may be null.</param>
+	<param name="emptyParentheses">If true, empty parentheses will be appended if <paramref name="parametersOpt"/> is null.</param>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.LineSeparators.VisualBasicLineSeparatorService.IsSeparableBlock(Roslyn.Compilers.VisualBasic.SyntaxNodeOrToken)">
+	<summary>Node types that are interesting for line separation.</summary>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.LineSeparators.VisualBasicLineSeparatorService.IsSeparableContainer(Roslyn.Compilers.Common.CommonSyntaxNode)">
+	<summary>Node types that may contain separable blocks.</summary>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.LineSeparators.VisualBasicLineSeparatorService.GetLineSeparators(Roslyn.Services.IDocument,Roslyn.Compilers.TextSpan,System.Threading.CancellationToken)">
+	<summary>
+ Given a syntaxTree returns line separator spans. The operation may take fairly long time
+ on a big syntaxTree so it is cancelable.
+ </summary>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.LineSeparators.VisualBasicLineSeparatorService.ProcessNodeList``1(Roslyn.Compilers.VisualBasic.SyntaxTree,Roslyn.Compilers.VisualBasic.SeparatedSyntaxList{``0},System.Collections.Generic.List{Roslyn.Compilers.TextSpan},System.Threading.CancellationToken)">
+	<summary>
+ If node is separable and not the last in its container =&gt; add line separator after the node
+ If node is separable and not the first in its container =&gt; ensure separator before the node
+ last separable node in Program needs separator after it.
+ </summary>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.LineCommit.ICommitFormatter.CommitRegion(Microsoft.VisualStudio.Text.SnapshotSpan,Microsoft.VisualStudio.Text.SnapshotSpan,Microsoft.VisualStudio.Text.ITextSnapshot,Roslyn.Compilers.Common.CommonSyntaxTree,System.Threading.CancellationToken)">
+	<summary>
+ Commits a region by formatting and case correcting it. It is assumed that an
+ ITextUndoTransaction is open the underlying text buffer, as multiple edits may be done
+ by this function. Further, if the operation is cancelled, the buffer may be left in a
+ partially committed state that must be rolled back by the transaction.
+ </summary>
+	<returns>True if a edit occurred, false otherwise.</returns>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.LineCommit.ContainingStatementInfo.GetInfo(Microsoft.VisualStudio.Text.SnapshotPoint,Roslyn.Compilers.VisualBasic.SyntaxTree,System.Threading.CancellationToken)">
+	<summary>
+ This function returns the "logical" statement that a given point is in. "Logical" in
+ this case means "the smallest unit the user probably thinks as a statement", or "the
+ thing we should format when you leave it."
+ </summary>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.LineCommit.CommitViewManager">
+	<summary>
+ This class watches for view-based events in relation to a specific subject buffer and passes along commit operations.
+ </summary>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.LineCommit.CommitCommandHandler">
+	<summary>
+ Watches for the enter key being pressed, and triggers a commit in response.
+ </summary>
+	<remarks>This particular command filter acts as a "wrapper" around any other command, as it
+ wishes to invoke the commit after whatever processed the enter is done doing what it's
+ doing.</remarks>
+</member><member name="F:Roslyn.Services.Editor.VisualBasic.LineCommit.CommitBufferManager._dirtyRegion">
+	<summary>
+ The tracking span which is the currently "dirty" region in the buffer. May be null if there is no dirty region.
+ </summary>
+</member><member name="F:Roslyn.Services.Editor.VisualBasic.LineCommit.CommitBufferManager._baseSnapshot">
+	<summary>
+ The base snapshot of the user's dirty edits; the snapshot of the text before any dirty
+ editing began. May be null if there is no dirty region.
+ </summary>
+	<remarks></remarks>
+</member><member name="F:Roslyn.Services.Editor.VisualBasic.LineCommit.CommitBufferManager._baseDocument">
+	<summary>
+ matching document for _BaseSnapshot
+ </summary>
+	<remarks></remarks>
+</member><member name="F:Roslyn.Services.Editor.VisualBasic.LineCommit.CommitBufferManager._suppressions">
+	<summary>
+ The number of times BeginSuppressingCommits() has been called.
+ </summary>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.LineCommit.CommitBufferManager.CommitDirty(System.Threading.CancellationToken)">
+	<summary>
+ Commits any dirty region, if one exists
+ </summary>
+	<returns>True if a commit occurred, false otherwise.</returns>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.LineCommit.CommitBufferManager.BeginSuppressingCommits">
+	<summary>
+ Suppresses future commits, causing all calls to CommitDirty() to be a simple no-op, even
+ if there is a dirty span.
+ </summary>
+	<returns>An IDisposable that should be disposed when the caller wants to resume
+ submissions.</returns>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.LineCommit.CommitBufferManager">
+	<summary>
+ This class watches for buffer-based events, tracks the dirty regions, and invokes the formatter as appropriate
+ </summary>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.KeywordHighlighting.ForLoopBlockHighlighter.GetNextStatementMatchingForBlock(Roslyn.Compilers.VisualBasic.ForBlockSyntax)">
+	<summary>
+ Find the Next statement that closes this For block (if one exists). Normally that
+ would just be the one associated with forBlock, but if we have a "Next a, b" 
+ statement that is closing multiple loops, the Next statement is attached to the 
+ innermost matching loop.
+ </summary>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.KeywordHighlighting.ForLoopBlockHighlighter.GetForBlocksMatchingNextStatement(Roslyn.Compilers.VisualBasic.NextStatementSyntax)">
+	<summary>
+ Returns all For blocks logically matching the Next statement, ordered from outermost to 
+ innermost. Do not consider the actual names of the loop variables because highlighting 
+ should work even if the wrong identifier names are listed. 
+ </summary>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.EndConstructGeneration.EndConstructStatementVisitor.NeedsGetAccessor(Roslyn.Compilers.VisualBasic.PropertyStatementSyntax,Roslyn.Compilers.VisualBasic.MethodBlockSyntax)">
+	<summary>
+ Given a property declaration, determines if a Get accessor needs to be generated. This checks to see if any
+ getters already exist.
+ </summary>
+	<param name="accessorToIgnore">An existing getter to ignore. When we are checking for existing getters, we
+ might be in the middle of typing one that would be a false positive. </param>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.EndConstructGeneration.EndConstructStatementVisitor.NeedsSetAccessor(Roslyn.Compilers.VisualBasic.PropertyStatementSyntax,Roslyn.Compilers.VisualBasic.MethodBlockSyntax)">
+	<summary>
+ Given a property declaration, determines if a Set accessor needs to be generated. This checks to see if any
+ getters already exist.
+ </summary>
+	<param name="accessorToIgnore">An existing getter to ignore. When we are checking for existing getters, we
+ might be in the middle of typing one that would be a false positive. </param>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.EndConstructGeneration.EndConstructStatementVisitor.ConvertSingleLineStatementsToMultiLineStatements(Roslyn.Compilers.VisualBasic.SeparatedSyntaxList{Roslyn.Compilers.VisualBasic.StatementSyntax},System.String)">
+	<summary>
+ Given a separatedSyntaxList of statements separated by colons, converts them to a
+ separate syntax list of statements separated by newlines
+ </summary>
+	<param name="statements">The list of statements to convert.</param>
+	<param name="indentedWhitespace">The whitespace to indent with.</param>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.EndConstructGeneration.EndConstructStatementVisitor.TryApplyOnForStatement(Roslyn.Compilers.VisualBasic.StatementSyntax)">
+	<param name="forStatement">The ForStatementSyntax or ForEachStatementSyntax for the loop.</param>
+</member><member name="P:Roslyn.Services.Editor.VisualBasic.EndConstructGeneration.EndConstructState.NewLineCharacter">
+	<summary>
+ The new line character that should be used when spitting lines of code.
+ </summary>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.EndConstructGeneration.EndConstructCommandHandler.SpaceOnlyFormatterRule">
+	<summary>
+ format only spaces between tokens
+ </summary>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.ContentType.FileExtensionMappings">
+	<summary>
+ Mappings of file extensions supported by the Visual Basic editor to VB content type.
+ </summary>
+</member><member name="F:Roslyn.Services.Editor.VisualBasic.ContentType.ContentTypeDefinitions.VisualBasicContentTypeDefinition">
+	<summary>
+ Definition of the primary VB content type.
+ </summary>
+</member><member name="M:Roslyn.Services.Editor.VisualBasic.NavigationBar.NavigationBarItemService.CreateItemForEvents(Roslyn.Compilers.VisualBasic.NamedTypeSymbol,Roslyn.Compilers.VisualBasic.TypeSymbol,Roslyn.Compilers.VisualBasic.PropertySymbol,Roslyn.Services.IDocument,System.Threading.CancellationToken)">
+	<summary>
+ Creates the left-hand entry and right-hand entries for a list of events.
+ </summary>
+	<param name="containingType">The type that contains the methods attached to the events.
+ For items that will generate new methods, they will be generated into this
+ class.</param>
+	<param name="eventType">The type to list the events of. This is either equal to
+ containingType if it's listing the event handlers for the base types, or else it's the
+ type of the eventContainer.</param>
+	<param name="eventContainer">If this is an entry for a WithEvents member, the WithEvents
+ property itself.</param>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.AutomaticEndConstructCorrection.ViewCreationListener">
+	<summary>
+ Tracks user's interaction with editor
+ </summary>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.AutomaticEndConstructCorrection.LetterOnlyTrackingSpan">
+	<summary>
+ This is a workaround until Jason checkin actual custom tracking span
+ </summary>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.AutomaticEndConstructCorrection.AutomaticEndConstructCorrector">
+	<summary>
+ Tracks user's interaction with editor
+ </summary>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.AutomaticCompletion.Trackers.StringLiteralTrackerProvider">
+	<summary>
+ string literal tracker provider
+ </summary>
+	<remarks></remarks>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.AutomaticCompletion.Trackers.ParentheseTrackerProvider">
+	<summary>
+ parenthese tracker provider
+ </summary>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.AutomaticCompletion.Trackers.LessAndGreaterThanTrackerProvider">
+	<summary>
+ less than and greater than tracker provider
+ </summary>
+	<remarks></remarks>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.AutomaticCompletion.Trackers.BracketTrackerProvider">
+	<summary>
+ bracket tracker provider
+ </summary>
+	<remarks></remarks>
+</member><member name="T:Roslyn.Services.Editor.VisualBasic.AutomaticCompletion.Trackers.BraceTrackerProvider">
+	<summary>
+ brace tracker provider
+ </summary>
+</member>
+</members>
+</doc>
