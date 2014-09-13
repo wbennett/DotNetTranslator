@@ -28,25 +28,48 @@ namespace DotNetTranslator
     {
         static void Main(string[] args)
         {
-            if (args.Length != 2 ||
-                !File.Exists(args[0]))
+            string inputFile;
+            string outputFile;
+            if (args.Length != 2 || !File.Exists(args[0]))
             {
                 Console.WriteLine("Usage: DotNetTranslator.exe <path/to/vb file> <path/to/csharp file>");
-                return;
+                Console.Write("Enter path to .vb file: ");
+                inputFile = Console.ReadLine();
+                Console.Write("Enter path to save the .cs file too: ");
+                outputFile = Console.ReadLine();
+            }
+            else
+            {
+                inputFile = args[0];
+                outputFile = args[1];
             }
             
-            if (File.Exists(args[1]))
+            if (File.Exists(outputFile))
             {
-                Console.WriteLine("Output file exists, please remove to output new file.");
+                Console.WriteLine("{0} already exists do you want to delete it? yes or no: ", outputFile);
+                if(Console.ReadLine().ToLower() == "yes")
+                {
+                    File.Delete(outputFile);                    
+                }
             }
 
 
-            using (var stream = Converter.ConvertVbtoCSharp(args[0]))
-            using (var fileStream = new FileStream(args[1],FileMode.CreateNew))
+            using (var stream = Converter.ConvertVbtoCSharp(inputFile))
+            using (var fileStream = new FileStream(outputFile,FileMode.CreateNew))
             {
                 stream.Seek(0, SeekOrigin.Begin);
                 stream.CopyTo(fileStream);
             }
+
+            if(File.Exists(outputFile))
+            {
+                Console.WriteLine("Conversion successful");
+            }
+            else
+            {
+                Console.WriteLine("There was an error, conversion was unsuccessful");
+            }
+            Console.ReadLine();
         }
     }
 }
