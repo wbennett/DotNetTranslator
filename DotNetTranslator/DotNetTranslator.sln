@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VisualBasicToCSharpConverter", "..\VisualBasicToCSharpConverter\VisualBasicToCSharpConverter.vbproj", "{93C7AB9E-ACE5-4586-9C7D-B3C1697C4D9D}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTranslator", "DotNetTranslator.csproj", "{5D8480D1-665F-45EB-9617-5A87D7E4245C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTranslator.Business", "..\DotNetTranslator.Business\DotNetTranslator.Business.csproj", "{DBF367F6-0EE8-4F1B-96F5-2C8728D9B146}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTranslatorUI", "..\DotNetTranslatorUI\DotNetTranslatorUI.csproj", "{445FC61E-263C-4F78-BEE0-33B1DB645F91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{DBF367F6-0EE8-4F1B-96F5-2C8728D9B146}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBF367F6-0EE8-4F1B-96F5-2C8728D9B146}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBF367F6-0EE8-4F1B-96F5-2C8728D9B146}.Release|Any CPU.Build.0 = Release|Any CPU
+		{445FC61E-263C-4F78-BEE0-33B1DB645F91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{445FC61E-263C-4F78-BEE0-33B1DB645F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{445FC61E-263C-4F78-BEE0-33B1DB645F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{445FC61E-263C-4F78-BEE0-33B1DB645F91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
