@@ -29,6 +29,7 @@ namespace DotNetTranslator.Business
             new VisualBasicToCSharpConverter.Converting.Converter();
         private static readonly CSharpToVisualBasicConverter.Converting.Converter csharpToVisualBasicConverter = 
             new CSharpToVisualBasicConverter.Converting.Converter();
+        
         /// <summary>
         /// Convert a vb file to a C# memory stream.
         /// Usage: 
@@ -51,6 +52,20 @@ namespace DotNetTranslator.Business
         }
 
         /// <summary>
+        /// Convert a vb code to a C# string.
+        /// Usage: 
+        /// var csharpCode = Converter.ConvertVbtoCSharpString(vbCode);
+        /// </summary>
+        /// <param name="content">String containing the CSharp code.</param>
+        /// <returns>File stream of the converted code.</returns>
+        public static string ConvertVbtoCSharpString(string content)
+        {
+            var vbAst = Roslyn.Compilers.VisualBasic.SyntaxTree.ParseText(content);
+            var csharpAst = visualBasicToCSharpConverter.Convert(vbAst);
+            return csharpAst.ToFullString();
+        }
+
+        /// <summary>
         /// Convert a C# source file to a VB memory stream.
         /// Usage: 
         /// using(var stream = Converter.ConvertCSharpToVb(filePath))
@@ -62,13 +77,27 @@ namespace DotNetTranslator.Business
         /// <returns>File stream of the converted code.</returns>
         public static Stream ConvertCSharpToVb(string file)
         {
-            var vbAst = Roslyn.Compilers.VisualBasic.SyntaxTree.ParseFile(file);
-            var csharpAst = visualBasicToCSharpConverter.Convert(vbAst);
+            var csharpAst = Roslyn.Compilers.CSharp.SyntaxTree.ParseFile(file);
+            var vbAst = csharpToVisualBasicConverter.Convert(csharpAst);
             var rStream = new MemoryStream(
                 Encoding.UTF8.GetBytes(
-                    csharpAst.ToFullString()
+                    vbAst.ToFullString()
                 ));
             return rStream;
+        }
+
+        /// <summary>
+        /// Convert a C# source file to a VB memory stream.
+        /// Usage: 
+        /// var vbCode = Converter.ConvertVbtoCSharpString(csharpCode);
+        /// </summary>
+        /// <param name="content">String containing the CSharp code.</param>
+        /// <returns>File stream of the converted code.</returns>
+        public static string ConvertCSharpToVbString(string content)
+        {
+            var csharpAst = Roslyn.Compilers.CSharp.SyntaxTree.ParseText(content);
+            var vbAst = csharpToVisualBasicConverter.Convert(csharpAst);
+            return vbAst.ToFullString();
         }
     }
 }
