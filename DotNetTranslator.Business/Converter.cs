@@ -77,11 +77,11 @@ namespace DotNetTranslator.Business
         /// <returns>File stream of the converted code.</returns>
         public static Stream ConvertCSharpToVb(string file)
         {
-            var vbAst = Roslyn.Compilers.VisualBasic.SyntaxTree.ParseFile(file);
-            var csharpAst = visualBasicToCSharpConverter.Convert(vbAst);
+            var csharpAst = Roslyn.Compilers.VisualBasic.SyntaxTree.ParseFile(file);
+            var vbAst = visualBasicToCSharpConverter.Convert(csharpAst);
             var rStream = new MemoryStream(
                 Encoding.UTF8.GetBytes(
-                    csharpAst.ToFullString()
+                    vbAst.ToFullString()
                 ));
             return rStream;
         }
@@ -95,9 +95,9 @@ namespace DotNetTranslator.Business
         /// <returns>File stream of the converted code.</returns>
         public static string ConvertCSharpToVbString(string content)
         {
-            var vbAst = Roslyn.Compilers.VisualBasic.SyntaxTree.ParseText(content);
-            var csharpAst = visualBasicToCSharpConverter.Convert(vbAst);
-            return csharpAst.ToFullString();
+            var csharpAst = Roslyn.Compilers.VisualBasic.SyntaxTree.ParseText(content);
+            var vbAst = visualBasicToCSharpConverter.Convert(csharpAst);
+            return vbAst.ToFullString();
         }
     }
 }
